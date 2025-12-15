@@ -260,3 +260,31 @@ import {
 } from "./lib";
 ```
 
+---
+
+## ライセンスについて / License
+
+このライブラリは [Remotion](https://www.remotion.dev/) を使用しています。
+
+**重要**: Remotionは商用利用の場合、ライセンス購入が必要です。
+
+- **無料で利用可能**: 個人利用、教育目的、オープンソースプロジェクト
+- **有料ライセンスが必要**: 企業での利用、商用利用、クライアントワーク
+
+詳細は [Remotion Licensing](https://www.remotion.dev/license) を確認してください。
+
+本ライブラリ（Remotion Movie Builder）自体はRemotionのラッパーであり、Remotionのライセンス条項に従う必要があります。
+
+---
+
+This library uses [Remotion](https://www.remotion.dev/).
+
+**Important**: Remotion requires a license for commercial use.
+
+- **Free to use**: Personal use, educational purposes, open-source projects
+- **License required**: Company use, commercial use, client work
+
+See [Remotion Licensing](https://www.remotion.dev/license) for details.
+
+This library (Remotion Movie Builder) is a wrapper around Remotion and is subject to Remotion's licensing terms.
+
