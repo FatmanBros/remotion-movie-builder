@@ -1,0 +1,425 @@
+import { Scene } from "./Scene";
+import { OpeningEnding } from "./OpeningEnding";
+import {
+  OpeningEndingOptions,
+  SceneOptions,
+  OpeningEndingData,
+  SceneData,
+  CrossFadeData,
+  AudioData,
+  AudioOptions,
+  BgmOptions,
+  MovieData,
+  MovieOptions,
+  TransitionType,
+  TelopEffects,
+  OverlayOptions,
+  FixedElementData,
+  FixedImageOptions,
+  FixedTextOptions,
+} from "./types";
+
+export class Movie {
+  private _opening?: OpeningEnding;
+  private _ending?: OpeningEnding;
+  private _scenes: Scene[] = [];
+  private _crossFades: CrossFadeData[] = [];
+  private _audios: AudioData[] = [];
+  private _fixedElements: FixedElementData[] = [];
+  private _currentTime: number = 0;
+  private _defaultEffects?: TelopEffects;
+  private _defaultTransition?: TransitionType;
+  private _defaultTransitionDuration: number;
+  private _defaultOverlay?: OverlayOptions;
+  private _defaultTelopPosition?: string;
+
+  constructor(options?: MovieOptions) {
+    this._defaultEffects = options?.effects;
+    this._defaultTransition = options?.transition;
+    this._defaultTransitionDuration = options?.transitionDuration ?? 3;
+    this._defaultOverlay = options?.overlay;
+    this._defaultTelopPosition = options?.telopPosition;
+  }
+
+  /**
+   * オープニングを設定
+   * @param durationOrOptions 秒数、またはオプション（省略時はテロップ長から自動計算）
+   * @param options オプション（第1引数が秒数の場合）
+   */
+  opening(durationOrOptions: number | OpeningEndingOptions, options?: OpeningEndingOptions): OpeningEnding {
+    if (typeof durationOrOptions === "number") {
+      // opening(duration, options) の形式
+      const mergedOptions = this._mergeDefaultsToOptions(options!);
+      this._opening = new OpeningEnding(durationOrOptions, mergedOptions);
+    } else {
+      // opening(options) の形式（duration自動計算）
+      const mergedOptions = this._mergeDefaultsToOptions(durationOrOptions);
+      this._opening = new OpeningEnding(undefined, mergedOptions);
+    }
+    return this._opening;
+  }
+
+  /**
+   * オプションにMovieのデフォルト設定をマージ
+   */
+  private _mergeDefaultsToOptions<T extends { effects?: TelopEffects; overlay?: OverlayOptions; telopPosition?: string }>(options: T): T {
+    let result = { ...options };
+
+    // デフォルトエフェクトをマージ
+    if (this._defaultEffects && !options.effects) {
+      result.effects = this._defaultEffects;
+    }
+
+    // デフォルトオーバーレイをマージ（シーン個別指定がなければ）
+    if (this._defaultOverlay && !options.overlay) {
+      result.overlay = this._defaultOverlay;
+    }
+
+    // デフォルトテロップ位置をマージ（シーン個別指定がなければ）
+    if (this._defaultTelopPosition && !options.telopPosition) {
+      result.telopPosition = this._defaultTelopPosition;
+    }
+
+    return result;
+  }
+
+  /**
+   * シーンを追加
+   * @param fileOrOptions 動画/画像ファイル名、またはオプション（メディアなしの場合）
+   * @param options シーンのオプション（第1引数がファイル名の場合）
+   */
+  scene(fileOrOptions?: string | SceneOptions, options?: SceneOptions): Scene {
+    let file: string | undefined;
+    let image: string | undefined;
+    let opts: SceneOptions;
+
+    // 画像ファイルの拡張子
+    const imageExtensions = [".jpg", ".jpeg", ".png", ".webp", ".gif", ".bmp", ".svg"];
+
+    if (typeof fileOrOptions === "string") {
+      // scene("file.mp4", options) または scene("image.png", options) の形式
+      const ext = fileOrOptions.toLowerCase().match(/\.[^.]+$/)?.[0] ?? "";
+      if (imageExtensions.includes(ext)) {
+        image = fileOrOptions;
+      } else {
+        file = fileOrOptions;
+      }
+      opts = options ?? {};
+    } else {
+      // scene(options) または scene() の形式（メディアなし）
+      opts = fileOrOptions ?? {};
+    }
+
+    // keyはシーン番号を含めて一意にする
+    const sceneIndex = this._scenes.length;
+    const mediaFile = file ?? image;
+    const baseName = mediaFile ? mediaFile.replace(/\.[^.]+$/, "") : "scene";
+    const key = `${baseName}_${sceneIndex}`;
+
+    // Movieのデフォルトエフェクトをマージ
+    const mergedOpts = this._mergeDefaultsToOptions(opts);
+
+    const scene = new Scene(key, file, image, mergedOpts);
+    this._scenes.push(scene);
+
+    return scene;
+  }
+
+  /**
+   * クロスフェード/トランジションを設定
+   * @param scene1 シーン1
+   * @param scene2 シーン2
+   * @param duration フェード時間（秒）デフォルト3秒
+   * @param transition トランジション種類（デフォルト: fade）
+   */
+  crossFade(
+    scene1: Scene,
+    scene2: Scene,
+    duration: number = 3,
+    transition: TransitionType = "fade"
+  ): this {
+    this._crossFades.push({
+      scene1Key: scene1.key,
+      scene2Key: scene2.key,
+      duration,
+      transition,
+    });
+    return this;
+  }
+
+  /**
+   * トランジションを設定（crossFadeのエイリアス）
+   */
+  transition(
+    scene1: Scene,
+    scene2: Scene,
+    transition: TransitionType,
+    duration: number = 3
+  ): this {
+    return this.crossFade(scene1, scene2, duration, transition);
+  }
+
+  /**
+   * エンディングを設定
+   * @param durationOrOptions 秒数、またはオプション（省略時はテロップ長から自動計算）
+   * @param options オプション（第1引数が秒数の場合）
+   */
+  ending(durationOrOptions: number | OpeningEndingOptions, options?: OpeningEndingOptions): OpeningEnding {
+    if (typeof durationOrOptions === "number") {
+      // ending(duration, options) の形式
+      const mergedOptions = this._mergeDefaultsToOptions(options!);
+      this._ending = new OpeningEnding(durationOrOptions, mergedOptions);
+    } else {
+      // ending(options) の形式（duration自動計算）
+      const mergedOptions = this._mergeDefaultsToOptions(durationOrOptions);
+      this._ending = new OpeningEnding(undefined, mergedOptions);
+    }
+    return this._ending;
+  }
+
+  /**
+   * グローバルオーディオを追加（動画全体で再生）
+   * @param file オーディオファイル名
+   * @param options オーディオのオプション
+   */
+  audio(file: string, options: AudioOptions = {}): this {
+    const audioData: AudioData = {
+      file,
+      startTime: 0, // 動画開始から
+      duration: undefined, // 最後まで再生
+      volume: options.volume ?? 1,
+      fadeIn: options.fadeIn ?? 0,
+      fadeOut: options.fadeOut ?? 0,
+      loop: options.loop ?? false,
+    };
+
+    this._audios.push(audioData);
+    return this;
+  }
+
+  /**
+   * BGMを追加（シーン中はダッキングで音量を下げる）
+   * @param file オーディオファイル名
+   * @param options BGMのオプション
+   */
+  bgm(file: string, options: BgmOptions = {}): this {
+    const audioData: AudioData = {
+      file,
+      startTime: 0,
+      duration: undefined,
+      volume: options.volume ?? 1,
+      fadeIn: options.fadeIn ?? 2,
+      fadeOut: options.fadeOut ?? 2,
+      loop: true,
+      ducking: options.ducking ?? (options.volume ?? 1) * 0.3, // デフォルトは30%に下げる
+    };
+
+    this._audios.push(audioData);
+    return this;
+  }
+
+  /**
+   * 固定画像を追加（ムービー全体で表示）
+   * @param file 画像ファイル名
+   * @param options オプション
+   */
+  fixedImage(file: string, options: FixedImageOptions = {}): this {
+    this._fixedElements.push({
+      type: "image",
+      content: file,
+      position: options.position ?? "top-right",
+      margin: options.margin ?? 20,
+      opacity: options.opacity ?? 1,
+      scale: options.scale ?? 1,
+      width: options.width,
+      height: options.height,
+    });
+    return this;
+  }
+
+  /**
+   * 固定テキストを追加（ムービー全体で表示）
+   * @param text テキスト
+   * @param options オプション
+   */
+  fixedText(text: string, options: FixedTextOptions = {}): this {
+    this._fixedElements.push({
+      type: "text",
+      content: text,
+      position: options.position ?? "top-right",
+      margin: options.margin ?? 20,
+      opacity: options.opacity ?? 1,
+      scale: options.scale ?? 1,
+      fontSize: options.fontSize ?? 24,
+      color: options.color ?? "#ffffff",
+      backgroundColor: options.backgroundColor,
+      padding: options.padding ?? 8,
+      borderRadius: options.borderRadius ?? 4,
+    });
+    return this;
+  }
+
+  /**
+   * ムービーデータを構築
+   */
+  build(): MovieData {
+    let currentTime = 0;
+
+    // オープニングの時間
+    if (this._opening) {
+      currentTime = this._opening.duration;
+    }
+
+    // シーンの開始時間を計算
+    const scenesData: SceneData[] = [];
+    const sceneStartTimes = new Map<string, number>();
+
+    for (let i = 0; i < this._scenes.length; i++) {
+      const scene = this._scenes[i];
+
+      // クロスフェードを考慮した開始時間
+      let startTime = currentTime;
+      let transitionDuration: number | undefined;
+
+      // 前のシーンとのクロスフェードがあるか確認
+      if (i > 0) {
+        const prevScene = this._scenes[i - 1];
+
+        // movie.crossFade() で設定されたトランジション
+        const crossFade = this._crossFades.find(
+          (cf) =>
+            cf.scene1Key === prevScene.key && cf.scene2Key === scene.key
+        );
+
+        // scene.transitionTo() で設定されたトランジション
+        const sceneTransition = prevScene.transitions.find(
+          (t) => t.toSceneKey === scene.key
+        );
+
+        // 明示的なトランジションがない場合、デフォルトを使用
+        transitionDuration = crossFade?.duration ?? sceneTransition?.duration ??
+          (this._defaultTransition ? this._defaultTransitionDuration : undefined);
+
+        if (transitionDuration) {
+          // トランジション分だけ早く開始
+          startTime -= transitionDuration;
+        }
+      }
+
+      sceneStartTimes.set(scene.key, startTime);
+
+      // シーンのオーディオの startTime を絶対時間に変換
+      const sceneAudios = scene.audios.map((audio) => ({
+        ...audio,
+        startTime: startTime + audio.startTime,
+      }));
+
+      // クロスフェードがある場合、テロップの開始時間をオフセット
+      // （クロスフェード中にテロップが表示されないように）
+      const telopOffset = transitionDuration ?? 0;
+      const telops = scene.telops.map((telop) => ({
+        ...telop,
+        startTime: telop.startTime + telopOffset,
+      }));
+
+      // シーンのdurationにもオフセット分を加算
+      const sceneDuration = scene.duration + telopOffset;
+
+      scenesData.push({
+        key: scene.key,
+        file: scene.file,
+        image: scene.image,
+        backgroundColor: scene.backgroundColor,
+        duration: sceneDuration,
+        startTime,
+        trimBefore: scene.trimBefore,
+        effects: scene.effects,
+        telops,
+        wipes: scene.wipes,
+        audios: sceneAudios,
+        fixedElements: scene.fixedElements,
+        bgmVolume: scene.bgmVolume,
+        volume: scene.volume,
+        loop: scene.loop,
+        displayMode: scene.displayMode,
+      });
+
+      currentTime = startTime + sceneDuration;
+    }
+
+    // エンディングの時間
+    if (this._ending) {
+      currentTime += this._ending.duration;
+    }
+
+    // OpeningEnding インスタンスから OpeningEndingData に変換
+    const openingData: OpeningEndingData | undefined = this._opening
+      ? {
+          duration: this._opening.duration,
+          image: this._opening.image,
+          effect: this._opening.effect,
+          telops: this._opening.telops,
+          displayMode: this._opening.displayMode,
+        }
+      : undefined;
+
+    const endingData: OpeningEndingData | undefined = this._ending
+      ? {
+          duration: this._ending.duration,
+          image: this._ending.image,
+          effect: this._ending.effect,
+          telops: this._ending.telops,
+          displayMode: this._ending.displayMode,
+        }
+      : undefined;
+
+    // シーンからのトランジションを収集してマージ
+    const allCrossFades: CrossFadeData[] = [...this._crossFades];
+    for (const scene of this._scenes) {
+      for (const transition of scene.transitions) {
+        // 重複チェック（同じシーン間のトランジションは上書きしない）
+        const exists = allCrossFades.some(
+          (cf) => cf.scene1Key === scene.key && cf.scene2Key === transition.toSceneKey
+        );
+        if (!exists) {
+          allCrossFades.push({
+            scene1Key: scene.key,
+            scene2Key: transition.toSceneKey,
+            duration: transition.duration,
+            transition: transition.transition,
+          });
+        }
+      }
+    }
+
+    // デフォルトトランジションを連続するシーン間に追加
+    if (this._defaultTransition) {
+      for (let i = 0; i < this._scenes.length - 1; i++) {
+        const scene1 = this._scenes[i];
+        const scene2 = this._scenes[i + 1];
+        // 既に設定されていなければデフォルトを追加
+        const exists = allCrossFades.some(
+          (cf) => cf.scene1Key === scene1.key && cf.scene2Key === scene2.key
+        );
+        if (!exists) {
+          allCrossFades.push({
+            scene1Key: scene1.key,
+            scene2Key: scene2.key,
+            duration: this._defaultTransitionDuration,
+            transition: this._defaultTransition,
+          });
+        }
+      }
+    }
+
+    return {
+      opening: openingData,
+      ending: endingData,
+      scenes: scenesData,
+      crossFades: allCrossFades,
+      audios: this._audios,
+      fixedElements: this._fixedElements,
+      totalDuration: currentTime,
+    };
+  }
+}

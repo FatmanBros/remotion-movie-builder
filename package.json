@@ -1,0 +1,28 @@
+{
+  "name": "remotion",
+  "version": "1.0.0",
+  "description": "Video editing with Remotion",
+  "scripts": {
+    "start": "remotion studio",
+    "build": "remotion bundle",
+    "render": "remotion render ShortsVideo out.mp4",
+    "render:shorts": "remotion render ShortsVideo --props"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@remotion/animated-emoji": "^4.0.390",
+    "@remotion/cli": "^4.0.390",
+    "@remotion/google-fonts": "^4.0.390",
+    "@remotion/player": "^4.0.390",
+    "@remotion/transitions": "4.0.390",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "remotion": "^4.0.390",
+    "typescript": "^5.9.3"
+  }
+}
