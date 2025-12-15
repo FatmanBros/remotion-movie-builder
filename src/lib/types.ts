@@ -15,12 +15,26 @@ export type CinematicMode =
   | "european"     // ヨーロピアンヴィスタ (1.66:1)
   | "imax";        // IMAX (1.43:1)
 
+// 分割表示の基本パターン
+export type SplitDisplayModeBasic =
+  | "1/2" | "1/3" | "2/3" | "1/4" | "3/4";
+
+// 分割表示の拡張パターン（位置指定付き）
+export type SplitDisplayModeWithPosition =
+  | `${SplitDisplayModeBasic} top`
+  | `${SplitDisplayModeBasic} bottom`
+  | `${SplitDisplayModeBasic} center`;
+
 // 分割表示（文字列パターン）
 // "2/3" - 高さ2/3で中央配置
 // "1/3 80%" - 高さ1/3、幅80%で中央配置
 // "2/3 top" - 高さ2/3で上寄せ（下をクロップ）
 // "2/3 bottom" - 高さ2/3で下寄せ（上をクロップ）
-export type SplitDisplayMode = string;
+// カスタムパターンはstringで許容
+export type SplitDisplayMode =
+  | SplitDisplayModeBasic
+  | SplitDisplayModeWithPosition
+  | (string & {});
 
 // オブジェクト形式の詳細指定
 export type DisplayModeObject = {
@@ -252,10 +266,23 @@ export type OverlayOptions = {
   opacity?: number; // 不透明度（0-1）デフォルト 0.7
 };
 
+// テロップの位置 - 基本プリセット
+export type TelopPositionPreset = "bottom" | "top" | "center";
+
+// テロップの位置 - 拡張パターン
+// "bottom 20%" | "top 15%" | "bottom 80px" など
+export type TelopPositionExtended =
+  | `${"bottom" | "top"} ${number}%`
+  | `${"bottom" | "top"} ${number}px`;
+
 // テロップの位置
 // 基本: "bottom" | "center" | "top"
 // 拡張: "bottom 20%" | "top 15%" | "80px" など
-export type TelopPosition = string;
+// カスタムパターンもstringで許容
+export type TelopPosition =
+  | TelopPositionPreset
+  | TelopPositionExtended
+  | (string & {});
 
 // AnimatedEmoji の名前（@remotion/animated-emoji）
 export type EmojiName = string;
