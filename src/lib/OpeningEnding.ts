@@ -1,16 +1,5 @@
-import { EffectType, TelopData, TelopOptions, TelopEffects, OpeningEndingOptions, DisplayMode } from "./types";
-
-/**
- * 文字数からテロップのdurationを計算
- * 日本語の読みやすい速度: 約5文字/秒
- * 最低2秒、エフェクト用に+1秒
- */
-function calculateTelopDuration(text: string): number {
-  const charCount = text.length;
-  const readingTime = charCount * 0.2; // 5文字/秒 = 0.2秒/文字
-  const effectTime = 1; // エフェクト用の余白
-  return Math.max(2, readingTime + effectTime);
-}
+import { EffectType, TelopData, TelopOptions, TelopEffects, OpeningEndingOptions, DisplayMode, OverlayOptions } from "./types";
+import { calculateTelopDuration, normalizeSfx } from "./utils/telopUtils";
 
 export class OpeningEnding {
   private _explicitDuration?: number;
@@ -18,6 +7,7 @@ export class OpeningEnding {
   readonly effect?: EffectType;
   readonly defaultEffects?: TelopEffects;
   readonly defaultTelopPosition?: string;
+  readonly defaultOverlay?: OverlayOptions;
   readonly displayMode?: DisplayMode;
   private _telops: TelopData[] = [];
   private _currentTime: number = 0;
@@ -32,6 +22,7 @@ export class OpeningEnding {
     this.effect = options.effect;
     this.defaultEffects = options.effects;
     this.defaultTelopPosition = options.telopPosition;
+    this.defaultOverlay = options.overlay;
     this.displayMode = options.displayMode;
   }
 
@@ -94,6 +85,7 @@ export class OpeningEnding {
    */
   private _addTelop(text: string, startTime: number, options: TelopOptions): void {
     const duration = options.duration ?? calculateTelopDuration(text);
+    const sfx = normalizeSfx(options.sfx);
 
     const telopData: TelopData = {
       text,
@@ -101,9 +93,10 @@ export class OpeningEnding {
       duration,
       effects: options.effects ?? this.defaultEffects,
       position: options.position ?? this.defaultTelopPosition ?? "bottom",
-      overlay: options.overlay,
+      overlay: options.overlay ?? this.defaultOverlay,
       emoji: options.emoji,
       color: options.color,
+      sfx,
     };
 
     this._telops.push(telopData);

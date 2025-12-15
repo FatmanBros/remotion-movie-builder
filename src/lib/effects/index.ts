@@ -74,28 +74,47 @@ export type {
 
 /**
  * エフェクト名からエフェクト関数を取得するマップ
+ * EffectedText.tsxで使用
  */
 export const effectMap = {
   // 出現エフェクト
   enter: {
     drop: EnterEffects.drop,
     rise: EnterEffects.rise,
-    slideIn: EnterEffects.slideIn,
+    slideInLeft: (frame: number, fps: number, charIndex: number, totalChars: number) =>
+      EnterEffects.slideIn(frame, fps, charIndex, totalChars, "left"),
+    slideInRight: (frame: number, fps: number, charIndex: number, totalChars: number) =>
+      EnterEffects.slideIn(frame, fps, charIndex, totalChars, "right"),
     zoomIn: EnterEffects.zoomIn,
     bounce: EnterEffects.bounce,
-    typewriter: EnterEffects.typewriter,
-    blur: EnterEffects.blur,
-    rotate: EnterEffects.rotate,
-    elastic: EnterEffects.elastic,
+    typewriter: (frame: number, fps: number, charIndex: number, totalChars: number) =>
+      EnterEffects.typewriter({ frame, fps, charIndex, totalChars }),
+    blur: (frame: number, fps: number, charIndex: number, totalChars: number) =>
+      EnterEffects.blur({ frame, fps, charIndex, totalChars }),
+    rotate: (frame: number, fps: number, charIndex: number, totalChars: number) =>
+      EnterEffects.rotate({ frame, fps, charIndex, totalChars }),
+    elastic: (frame: number, fps: number, charIndex: number, totalChars: number) =>
+      EnterEffects.elastic({ frame, fps, charIndex, totalChars }),
+    spring: EnterEffects.spring,
+    fadeIn: EnterEffects.fadeIn,
+    swing: EnterEffects.swing,
+    flip: EnterEffects.flip,
   },
   // 消失エフェクト
   exit: {
     dropOut: ExitEffects.dropOut,
     riseOut: ExitEffects.riseOut,
-    slideOut: ExitEffects.slideOut,
+    slideOutLeft: (frame: number, fps: number, charIndex: number, totalChars: number, durationFrames: number) =>
+      ExitEffects.slideOut(frame, fps, charIndex, totalChars, durationFrames, "left"),
+    slideOutRight: (frame: number, fps: number, charIndex: number, totalChars: number, durationFrames: number) =>
+      ExitEffects.slideOut(frame, fps, charIndex, totalChars, durationFrames, "right"),
     zoomOut: ExitEffects.zoomOut,
     dissolve: ExitEffects.dissolve,
     scatter: ExitEffects.scatter,
+    springOut: ExitEffects.springOut,
+    fadeOut: ExitEffects.fadeOut,
+    shrink: ExitEffects.shrink,
+    flipOut: ExitEffects.flipOut,
   },
   // 強調エフェクト
   emphasis: {
@@ -105,5 +124,9 @@ export const effectMap = {
     wave: EmphasisEffects.waveEffect,
     rainbow: EmphasisEffects.rainbowEffect,
     neon: EmphasisEffects.neonEffect,
+    kirakira: EmphasisEffects.kirakiraEffect,
+    float: EmphasisEffects.floatEffect,
+    spin: EmphasisEffects.spinEffect,
+    twinkle: EmphasisEffects.twinkleEffect,
   },
 } as const;

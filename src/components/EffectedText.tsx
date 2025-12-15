@@ -1,7 +1,7 @@
 import React from "react";
 import { useCurrentFrame, useVideoConfig, interpolate } from "remotion";
 import { TelopEffects, TelopColor } from "../lib/types";
-import { EnterEffects, ExitEffects, EmphasisEffects } from "../lib/effects";
+import { effectMap } from "../lib/effects";
 
 type Props = {
   text: string;
@@ -213,102 +213,15 @@ export const EffectedText: React.FC<Props> = ({
 
 // 出現エフェクト取得
 function getEnterEffect(effectName: string) {
-  switch (effectName) {
-    case "drop":
-      return EnterEffects.drop;
-    case "rise":
-      return EnterEffects.rise;
-    case "slideInLeft":
-      return (frame: number, fps: number, charIndex: number, totalChars: number) =>
-        EnterEffects.slideIn(frame, fps, charIndex, totalChars, "left");
-    case "slideInRight":
-      return (frame: number, fps: number, charIndex: number, totalChars: number) =>
-        EnterEffects.slideIn(frame, fps, charIndex, totalChars, "right");
-    case "zoomIn":
-      return EnterEffects.zoomIn;
-    case "bounce":
-      return EnterEffects.bounce;
-    case "typewriter":
-      return (frame: number, fps: number, charIndex: number, totalChars: number) =>
-        EnterEffects.typewriter({ frame, fps, charIndex, totalChars });
-    case "blur":
-      return (frame: number, fps: number, charIndex: number, totalChars: number) =>
-        EnterEffects.blur({ frame, fps, charIndex, totalChars });
-    case "rotate":
-      return (frame: number, fps: number, charIndex: number, totalChars: number) =>
-        EnterEffects.rotate({ frame, fps, charIndex, totalChars });
-    case "elastic":
-      return (frame: number, fps: number, charIndex: number, totalChars: number) =>
-        EnterEffects.elastic({ frame, fps, charIndex, totalChars });
-    case "spring":
-      return EnterEffects.spring;
-    case "fadeIn":
-      return EnterEffects.fadeIn;
-    case "swing":
-      return EnterEffects.swing;
-    case "flip":
-      return EnterEffects.flip;
-    default:
-      return null;
-  }
+  return effectMap.enter[effectName as keyof typeof effectMap.enter] ?? null;
 }
 
 // 消失エフェクト取得
 function getExitEffect(effectName: string) {
-  switch (effectName) {
-    case "dropOut":
-      return ExitEffects.dropOut;
-    case "riseOut":
-      return ExitEffects.riseOut;
-    case "slideOutLeft":
-      return (frame: number, fps: number, charIndex: number, totalChars: number, duration: number) =>
-        ExitEffects.slideOut(frame, fps, charIndex, totalChars, duration, "left");
-    case "slideOutRight":
-      return (frame: number, fps: number, charIndex: number, totalChars: number, duration: number) =>
-        ExitEffects.slideOut(frame, fps, charIndex, totalChars, duration, "right");
-    case "zoomOut":
-      return ExitEffects.zoomOut;
-    case "dissolve":
-      return ExitEffects.dissolve;
-    case "scatter":
-      return ExitEffects.scatter;
-    case "springOut":
-      return ExitEffects.springOut;
-    case "fadeOut":
-      return ExitEffects.fadeOut;
-    case "shrink":
-      return ExitEffects.shrink;
-    case "flipOut":
-      return ExitEffects.flipOut;
-    default:
-      return null;
-  }
+  return effectMap.exit[effectName as keyof typeof effectMap.exit] ?? null;
 }
 
 // 強調エフェクト取得
 function getEmphasisEffect(effectName: string) {
-  switch (effectName) {
-    case "pulse":
-      return EmphasisEffects.pulseEffect;
-    case "shake":
-      return EmphasisEffects.shakeEffect;
-    case "glow":
-      return EmphasisEffects.glowEffect;
-    case "wave":
-      return EmphasisEffects.waveEffect;
-    case "rainbow":
-      return EmphasisEffects.rainbowEffect;
-    case "neon":
-      return EmphasisEffects.neonEffect;
-    case "kirakira":
-      return EmphasisEffects.kirakiraEffect;
-    case "float":
-      return EmphasisEffects.floatEffect;
-    case "spin":
-      return EmphasisEffects.spinEffect;
-    case "twinkle":
-      return EmphasisEffects.twinkleEffect;
-    default:
-      return null;
-  }
+  return effectMap.emphasis[effectName as keyof typeof effectMap.emphasis] ?? null;
 }

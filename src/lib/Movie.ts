@@ -141,10 +141,8 @@ export class Movie {
 
   /**
    * クロスフェード/トランジションを設定
-   * @param scene1 シーン1
-   * @param scene2 シーン2
-   * @param duration フェード時間（秒）デフォルト3秒
-   * @param transition トランジション種類（デフォルト: fade）
+   * @deprecated scene.transitionTo() を使用してください
+   * @example scene1.transitionTo(scene2, { duration: 3, transition: "fade" })
    */
   crossFade(
     scene1: Scene,
@@ -152,6 +150,12 @@ export class Movie {
     duration: number = 3,
     transition: TransitionType = "fade"
   ): this {
+    if (process.env.NODE_ENV === "development") {
+      console.warn(
+        "[Movie] crossFade() is deprecated. Use scene.transitionTo() instead.\n" +
+        "Example: scene1.transitionTo(scene2, { duration: 3, transition: \"fade\" })"
+      );
+    }
     this._crossFades.push({
       scene1Key: scene1.key,
       scene2Key: scene2.key,
@@ -163,6 +167,8 @@ export class Movie {
 
   /**
    * トランジションを設定（crossFadeのエイリアス）
+   * @deprecated scene.transitionTo() を使用してください
+   * @example scene1.transitionTo(scene2, { duration: 3, transition: "slideLeft" })
    */
   transition(
     scene1: Scene,
@@ -170,6 +176,12 @@ export class Movie {
     transition: TransitionType,
     duration: number = 3
   ): this {
+    if (process.env.NODE_ENV === "development") {
+      console.warn(
+        "[Movie] transition() is deprecated. Use scene.transitionTo() instead.\n" +
+        "Example: scene1.transitionTo(scene2, { duration: 3, transition: \"slideLeft\" })"
+      );
+    }
     return this.crossFade(scene1, scene2, duration, transition);
   }
 
