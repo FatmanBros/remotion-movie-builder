@@ -7,7 +7,9 @@ import { Effects, Movie, MovieRenderer, TelopPresets } from "../../lib";
  * - 個別エフェクト指定
  */
 const buildDemo3Movie = () => {
-  const movie = new Movie();
+  const movie = new Movie({
+    size: "shorts", // 1080x1920 縦型
+  });
 
   // プロローグ
   const prologue = movie.opening({

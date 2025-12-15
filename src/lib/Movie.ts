@@ -17,9 +17,13 @@ import {
   FixedElementData,
   FixedImageOptions,
   FixedTextOptions,
+  VideoSize,
 } from "./types";
 
 export class Movie {
+  private _fps: number;
+  private _width: number;
+  private _height: number;
   private _opening?: OpeningEnding;
   private _ending?: OpeningEnding;
   private _scenes: Scene[] = [];
@@ -34,6 +38,16 @@ export class Movie {
   private _defaultTelopPosition?: string;
 
   constructor(options?: MovieOptions) {
+    this._fps = options?.fps ?? 30;
+    // size プリセットがあればそちらを優先
+    if (options?.size) {
+      const preset = VideoSize[options.size];
+      this._width = preset.width;
+      this._height = preset.height;
+    } else {
+      this._width = options?.width ?? 1920;
+      this._height = options?.height ?? 1080;
+    }
     this._defaultEffects = options?.effects;
     this._defaultTransition = options?.transition;
     this._defaultTransitionDuration = options?.transitionDuration ?? 3;
@@ -413,13 +427,17 @@ export class Movie {
     }
 
     return {
+      fps: this._fps,
+      width: this._width,
+      height: this._height,
+      durationInFrames: Math.ceil(currentTime * this._fps),
+      totalDuration: currentTime,
       opening: openingData,
       ending: endingData,
       scenes: scenesData,
       crossFades: allCrossFades,
       audios: this._audios,
       fixedElements: this._fixedElements,
-      totalDuration: currentTime,
     };
   }
 }

@@ -98,8 +98,34 @@ export type OpeningEndingOptions = {
   displayMode?: DisplayMode; // 表示モード（デフォルト: cover）
 };
 
+// 動画サイズのプリセット
+export const VideoSize = {
+  // 横型（Landscape）
+  hd: { width: 1280, height: 720 },       // 720p
+  fullHd: { width: 1920, height: 1080 },  // 1080p
+  "4k": { width: 3840, height: 2160 },    // 4K
+
+  // 縦型（Portrait）- Shorts/Reels/TikTok
+  shorts: { width: 1080, height: 1920 },  // 9:16
+  reels: { width: 1080, height: 1920 },   // 9:16 (alias)
+  tiktok: { width: 1080, height: 1920 },  // 9:16 (alias)
+
+  // 正方形（Square）- Instagram
+  square: { width: 1080, height: 1080 },  // 1:1
+
+  // その他
+  twitter: { width: 1280, height: 720 },  // Twitter推奨
+  youtube: { width: 1920, height: 1080 }, // YouTube標準
+} as const;
+
+export type VideoSizePreset = keyof typeof VideoSize;
+
 // ムービー全体のオプション
 export type MovieOptions = {
+  fps?: number; // フレームレート（デフォルト: 30）
+  width?: number; // 幅（デフォルト: 1920）
+  height?: number; // 高さ（デフォルト: 1080）
+  size?: VideoSizePreset; // サイズプリセット（width/heightより優先）
   effects?: TelopEffects; // デフォルトテロップエフェクト（全シーン・プロローグ・エピローグに適用）
   transition?: TransitionType; // デフォルトトランジション（全シーン間に適用）
   transitionDuration?: number; // デフォルトトランジション秒数（デフォルト: 3）
@@ -372,11 +398,15 @@ export type OpeningEndingData = {
 
 // ムービー全体のデータ
 export type MovieData = {
+  fps: number; // フレームレート
+  width: number; // 幅
+  height: number; // 高さ
+  durationInFrames: number; // 総フレーム数
+  totalDuration: number; // 総秒数
   opening?: OpeningEndingData;
   ending?: OpeningEndingData;
   scenes: SceneData[];
   crossFades: CrossFadeData[];
   audios: AudioData[]; // グローバルオーディオ（BGM等）
   fixedElements: FixedElementData[]; // ムービー全体の固定要素
-  totalDuration: number;
 };

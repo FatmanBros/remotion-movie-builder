@@ -1,4 +1,6 @@
-import { Composition, staticFile } from "remotion";
+import React from "react";
+import { loadFont } from "@remotion/google-fonts/NotoSansJP";
+import { RmbComposition } from "./lib";
 import { ShortsVideoWithMovieClass, movieData } from "./compositions/local/ShortsVideoWithMovieClass";
 import {
   Demo1BasicScenes,
@@ -23,101 +25,25 @@ import {
   demo10MovieData,
 } from "./compositions/sample";
 
-const FPS = 30;
+// Noto Sans JP フォントをロード
+loadFont();
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
-      <Composition
-        id="ShortsVideoWithMovieClass"
-        component={ShortsVideoWithMovieClass}
-        durationInFrames={Math.ceil(movieData.totalDuration * FPS)}
-        fps={FPS}
-        width={1080}
-        height={1920}
-      />
+      <RmbComposition id="ShortsVideoWithMovieClass" component={ShortsVideoWithMovieClass} movieData={movieData} />
 
       {/* サンプルデモ動画 */}
-      <Composition
-        id="Demo1BasicScenes"
-        component={Demo1BasicScenes}
-        durationInFrames={Math.ceil(demo1MovieData.totalDuration * FPS)}
-        fps={FPS}
-        width={1920}
-        height={1080}
-      />
-      <Composition
-        id="Demo2ImageScenes"
-        component={Demo2ImageScenes}
-        durationInFrames={Math.ceil(demo2MovieData.totalDuration * FPS)}
-        fps={FPS}
-        width={1920}
-        height={1080}
-      />
-      <Composition
-        id="Demo3TelopEffects"
-        component={Demo3TelopEffects}
-        durationInFrames={Math.ceil(demo3MovieData.totalDuration * FPS)}
-        fps={FPS}
-        width={1920}
-        height={1080}
-      />
-      <Composition
-        id="Demo4Transitions"
-        component={Demo4Transitions}
-        durationInFrames={Math.ceil(demo4MovieData.totalDuration * FPS)}
-        fps={FPS}
-        width={1920}
-        height={1080}
-      />
-      <Composition
-        id="Demo5Wipe"
-        component={Demo5Wipe}
-        durationInFrames={Math.ceil(demo5MovieData.totalDuration * FPS)}
-        fps={FPS}
-        width={1920}
-        height={1080}
-      />
-      <Composition
-        id="Demo6BatchTelop"
-        component={Demo6BatchTelop}
-        durationInFrames={Math.ceil(demo6MovieData.totalDuration * FPS)}
-        fps={FPS}
-        width={1920}
-        height={1080}
-      />
-      <Composition
-        id="Demo7TelopColors"
-        component={Demo7TelopColors}
-        durationInFrames={Math.ceil(demo7MovieData.totalDuration * FPS)}
-        fps={FPS}
-        width={1920}
-        height={1080}
-      />
-      <Composition
-        id="Demo8Overlay"
-        component={Demo8Overlay}
-        durationInFrames={Math.ceil(demo8MovieData.totalDuration * FPS)}
-        fps={FPS}
-        width={1920}
-        height={1080}
-      />
-      <Composition
-        id="Demo9FixedElements"
-        component={Demo9FixedElements}
-        durationInFrames={Math.ceil(demo9MovieData.totalDuration * FPS)}
-        fps={FPS}
-        width={1920}
-        height={1080}
-      />
-      <Composition
-        id="Demo10DisplayModes"
-        component={Demo10DisplayModes}
-        durationInFrames={Math.ceil(demo10MovieData.totalDuration * FPS)}
-        fps={FPS}
-        width={1920}
-        height={1080}
-      />
+      <RmbComposition id="Demo1BasicScenes" component={Demo1BasicScenes} movieData={demo1MovieData} />
+      <RmbComposition id="Demo2ImageScenes" component={Demo2ImageScenes} movieData={demo2MovieData} />
+      <RmbComposition id="Demo3TelopEffects" component={Demo3TelopEffects} movieData={demo3MovieData} />
+      <RmbComposition id="Demo4Transitions" component={Demo4Transitions} movieData={demo4MovieData} />
+      <RmbComposition id="Demo5Wipe" component={Demo5Wipe} movieData={demo5MovieData} />
+      <RmbComposition id="Demo6BatchTelop" component={Demo6BatchTelop} movieData={demo6MovieData} />
+      <RmbComposition id="Demo7TelopColors" component={Demo7TelopColors} movieData={demo7MovieData} />
+      <RmbComposition id="Demo8Overlay" component={Demo8Overlay} movieData={demo8MovieData} />
+      <RmbComposition id="Demo9FixedElements" component={Demo9FixedElements} movieData={demo9MovieData} />
+      <RmbComposition id="Demo10DisplayModes" component={Demo10DisplayModes} movieData={demo10MovieData} />
     </>
   );
 };

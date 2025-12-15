@@ -1,8 +1,10 @@
-export { Movie } from "./Movie";
+export { Movie, Movie as Rmb } from "./Movie";
 export { Scene, type TransitionOptions } from "./Scene";
 export { OpeningEnding } from "./OpeningEnding";
 export { Effects, TelopPresets, Transitions, TelopColors } from "./Effects";
 export { MovieRenderer } from "./MovieRenderer";
+export { RmbComposition } from "./RmbComposition";
+export { VideoSize } from "./types";
 
 // 新しいエフェクトシステム
 export * as TelopEffects from "./effects";
@@ -45,4 +47,5 @@ export type {
   FixedTextOptions,
   FixedElementData,
   DisplayMode,
+  VideoSizePreset,
 } from "./types";

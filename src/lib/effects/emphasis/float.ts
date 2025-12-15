@@ -1,4 +1,4 @@
-import { EmphasisEffectParams } from "../types";
+import { EmphasisEffectParams } from "./kirakira";
 
 export const floatEffect = ({
   frame,
