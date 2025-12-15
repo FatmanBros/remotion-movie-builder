@@ -54,8 +54,8 @@ const movie = new Movie();
 | `opening(options)` | オープニングを設定 | `OpeningEnding` |
 | `scene(file?, options?)` | シーンを追加 | `Scene` |
 | `ending(options)` | エンディングを設定 | `OpeningEnding` |
-| `crossFade(scene1, scene2, duration?, transition?)` | トランジションを設定 | `this` |
-| `transition(scene1, scene2, transition, duration?)` | トランジションを設定 | `this` |
+| `crossFade(...)` | ⚠️ 非推奨: `scene.transitionTo()` を使用 | `this` |
+| `transition(...)` | ⚠️ 非推奨: `scene.transitionTo()` を使用 | `this` |
 | `audio(file, options?)` | グローバルオーディオを追加 | `this` |
 | `bgm(file, options?)` | BGMを追加（ダッキング対応） | `this` |
 | `build()` | MovieDataを構築 | `MovieData` |

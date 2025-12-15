@@ -83,7 +83,9 @@ movie.audio(file: string, options?: AudioOptions);
 | `options.fadeOut` | `number` | `0` | フェードアウト秒数 |
 | `options.loop` | `boolean` | `false` | ループ再生 |
 
-#### `crossFade(scene1, scene2, duration, transition?)`
+#### `crossFade(scene1, scene2, duration, transition?)` ⚠️ 非推奨
+
+> **@deprecated**: `scene.transitionTo()` を使用してください。
 
 2つのシーン間にクロスフェードを設定する。
 
@@ -91,7 +93,9 @@ movie.audio(file: string, options?: AudioOptions);
 movie.crossFade(scene1: Scene, scene2: Scene, duration: number, transition?: TransitionType);
 ```
 
-#### `transition(scene1, scene2, transition, duration)`
+#### `transition(scene1, scene2, transition, duration)` ⚠️ 非推奨
+
+> **@deprecated**: `scene.transitionTo()` を使用してください。
 
 2つのシーン間にトランジションを設定する。
 
