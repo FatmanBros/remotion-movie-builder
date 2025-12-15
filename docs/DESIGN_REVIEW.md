@@ -186,34 +186,38 @@ const transitionFn = transitionRegistry.get(transitionType);
 
 ## 優先度
 
-| 優先度 | 改善項目 | 理由 |
-|--------|----------|------|
-| 高 | calculateTelopDuration統一 | バグの温床 |
-| 高 | トランジションAPI統一 | 混乱を招く |
-| 中 | displayMode型安全化 | 実行時エラー削減 |
-| 中 | TelopRenderer分割 | 保守性向上 |
-| 低 | effectMap活用 | コード削減 |
-| 低 | 位置指定型統一 | 一貫性向上 |
+| 優先度 | 改善項目 | 理由 | 状態 |
+|--------|----------|------|------|
+| 高 | calculateTelopDuration統一 | バグの温床 | ✅ 完了 |
+| 高 | トランジションAPI統一 | 混乱を招く | ✅ @deprecated追加 |
+| 中 | displayMode型安全化 | 実行時エラー削減 | ✅ 完了 |
+| 中 | TelopRenderer分割 | 保守性向上 | ✅ 完了 |
+| 低 | effectMap活用 | コード削減 | ✅ 完了 |
+| 低 | 位置指定型統一 | 一貫性向上 | ✅ 完了 |
 
 ---
 
-## ファイル構成（現状）
+## ファイル構成（リファクタリング後）
 
 ```
 src/lib/
-├── Movie.ts              # ビルダー（442行）
-├── Scene.ts              # シーン（207行）
-├── OpeningEnding.ts      # プロローグ/エピローグ（113行）
+├── Movie.ts              # ビルダー
+├── Scene.ts              # シーン
+├── OpeningEnding.ts      # プロローグ/エピローグ
 ├── Effects.ts            # プリセット定義
-├── MovieRenderer.tsx     # 統合レンダラー（110行）
+├── MovieRenderer.tsx     # 統合レンダラー
 ├── RmbComposition.tsx    # Remotion統合
-├── types.ts              # 型定義（415行）
+├── types.ts              # 型定義（改善済み）
 ├── index.ts              # エクスポート
 ├── utils/
-│   └── displayMode.ts    # 表示モードパース
+│   ├── displayMode.ts      # 表示モードパース
+│   ├── colorUtils.ts       # 色変換ユーティリティ ← NEW
+│   ├── telopUtils.ts       # テロップ計算ユーティリティ ← NEW
+│   ├── telopPosition.ts    # テロップ位置ユーティリティ ← NEW
+│   └── transitionUtils.ts  # トランジション計算ユーティリティ ← NEW
 ├── renderers/
-│   ├── SceneRenderer.tsx    # 322行 ← 要分割
-│   ├── TelopRenderer.tsx    # 358行 ← 要分割
+│   ├── SceneRenderer.tsx    # 225行（-97行）
+│   ├── TelopRenderer.tsx    # 215行（-143行）
 │   ├── WipeRenderer.tsx     # 122行
 │   ├── AudioRenderer.tsx    # 90行
 │   ├── PrologueRenderer.tsx # 88行
@@ -221,8 +225,8 @@ src/lib/
 └── effects/
     ├── types.ts
     ├── common.ts
-    ├── index.ts
+    ├── index.ts          # effectMap完全版
     ├── enter/   # 14ファイル
-    ├── exit/    # 9ファイル
+    ├── exit/    # 10ファイル
     └── emphasis/ # 10ファイル
 ```
