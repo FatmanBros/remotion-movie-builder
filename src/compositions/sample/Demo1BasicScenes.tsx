@@ -1,5 +1,4 @@
-import React from "react";
-import { Effects, Movie, MovieRenderer, TelopPresets } from "../../lib";
+import { Effects, Movie, rmbProps } from "../../lib";
 
 /**
  * Demo1: 基本的なシーンとテロップの使い方
@@ -7,7 +6,7 @@ import { Effects, Movie, MovieRenderer, TelopPresets } from "../../lib";
  * - テロップの追加
  * - プロローグ/エピローグ
  */
-const buildDemo1Movie = () => {
+const movie = () => {
   const movie = new Movie();
 
   // プロローグ: 背景画像でタイトル表示
@@ -51,8 +50,7 @@ const buildDemo1Movie = () => {
   return movie.build();
 };
 
-export const demo1MovieData = buildDemo1Movie();
+export const demo1MovieData = movie();
 
-export const Demo1BasicScenes: React.FC = () => {
-  return <MovieRenderer movieData={demo1MovieData} />;
-};
+// Root.tsx で <RmbComposition {...demo1} /> として使用
+export const demo1 = rmbProps(demo1MovieData);

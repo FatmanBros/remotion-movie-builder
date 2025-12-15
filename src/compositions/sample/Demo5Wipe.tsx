@@ -1,5 +1,4 @@
-import React from "react";
-import { Effects, Movie, MovieRenderer, TelopPresets } from "../../lib";
+import { Effects, Movie, TelopPresets, rmbProps } from "../../lib";
 
 /**
  * Demo5: ワイプ（PiP）の使い方
@@ -121,6 +120,4 @@ const buildDemo5Movie = () => {
 
 export const demo5MovieData = buildDemo5Movie();
 
-export const Demo5Wipe: React.FC = () => {
-  return <MovieRenderer movieData={demo5MovieData} />;
-};
+export const demo5 = rmbProps(demo5MovieData);

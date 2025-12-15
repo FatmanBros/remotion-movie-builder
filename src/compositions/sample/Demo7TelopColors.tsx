@@ -1,5 +1,4 @@
-import React from "react";
-import { Effects, Movie, MovieRenderer, TelopColors } from "../../lib";
+import { Effects, Movie, TelopColors, rmbProps } from "../../lib";
 
 /**
  * Demo7: テロップの色カスタマイズ
@@ -97,6 +96,4 @@ const buildDemo7Movie = () => {
 
 export const demo7MovieData = buildDemo7Movie();
 
-export const Demo7TelopColors: React.FC = () => {
-  return <MovieRenderer movieData={demo7MovieData} />;
-};
+export const demo7 = rmbProps(demo7MovieData);

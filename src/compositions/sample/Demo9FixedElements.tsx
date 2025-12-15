@@ -1,5 +1,4 @@
-import React from "react";
-import { Movie, MovieRenderer, Effects, Transitions } from "../../lib";
+import { Movie, Effects, Transitions, rmbProps } from "../../lib";
 
 /**
  * Demo9: 固定要素（ロゴ・ウォーターマーク）
@@ -156,6 +155,4 @@ const buildDemo9Movie = () => {
 
 export const demo9MovieData = buildDemo9Movie();
 
-export const Demo9FixedElements: React.FC = () => {
-  return <MovieRenderer movieData={demo9MovieData} />;
-};
+export const demo9 = rmbProps(demo9MovieData);

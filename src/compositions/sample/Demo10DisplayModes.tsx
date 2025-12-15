@@ -1,5 +1,4 @@
-import React from "react";
-import { Movie, MovieRenderer, Effects, Transitions } from "../../lib";
+import { Movie, Effects, Transitions, rmbProps } from "../../lib";
 
 /**
  * Demo10: 表示モード
@@ -263,6 +262,4 @@ const buildDemo10Movie = () => {
 
 export const demo10MovieData = buildDemo10Movie();
 
-export const Demo10DisplayModes: React.FC = () => {
-  return <MovieRenderer movieData={demo10MovieData} />;
-};
+export const demo10 = rmbProps(demo10MovieData);

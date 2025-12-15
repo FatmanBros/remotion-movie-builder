@@ -1,5 +1,4 @@
-import React from "react";
-import { Movie, MovieRenderer, Effects, TelopColors } from "../../lib";
+import { Movie, Effects, TelopColors, rmbProps } from "../../lib";
 
 /**
  * Demo8: オーバーレイの種類
@@ -101,6 +100,4 @@ const buildDemo8Movie = () => {
 
 export const demo8MovieData = buildDemo8Movie();
 
-export const Demo8Overlay: React.FC = () => {
-  return <MovieRenderer movieData={demo8MovieData} />;
-};
+export const demo8 = rmbProps(demo8MovieData);

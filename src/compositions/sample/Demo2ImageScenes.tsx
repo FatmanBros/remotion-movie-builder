@@ -1,5 +1,4 @@
-import React from "react";
-import { Effects, Movie, MovieRenderer, TelopPresets } from "../../lib";
+import { Effects, Movie, rmbProps } from "../../lib";
 
 /**
  * Demo2: 画像シーンの使い方
@@ -73,6 +72,4 @@ const buildDemo2Movie = () => {
 
 export const demo2MovieData = buildDemo2Movie();
 
-export const Demo2ImageScenes: React.FC = () => {
-  return <MovieRenderer movieData={demo2MovieData} />;
-};
+export const demo2 = rmbProps(demo2MovieData);

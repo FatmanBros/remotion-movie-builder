@@ -1,5 +1,4 @@
-import React from "react";
-import { Effects, Movie, MovieRenderer, TelopPresets } from "../../lib";
+import { Effects, Movie, rmbProps } from "../../lib";
 
 /**
  * Demo6: テロップ配列と同時表示の使い方
@@ -75,6 +74,4 @@ const buildDemo6Movie = () => {
 
 export const demo6MovieData = buildDemo6Movie();
 
-export const Demo6BatchTelop: React.FC = () => {
-  return <MovieRenderer movieData={demo6MovieData} />;
-};
+export const demo6 = rmbProps(demo6MovieData);

@@ -3,7 +3,7 @@ export { Scene, type TransitionOptions } from "./Scene";
 export { OpeningEnding } from "./OpeningEnding";
 export { Effects, TelopPresets, Transitions, TelopColors } from "./Effects";
 export { MovieRenderer } from "./MovieRenderer";
-export { RmbComposition } from "./RmbComposition";
+export { RmbComposition, rmbProps, type RmbCompositionProps } from "./RmbComposition";
 export { VideoSize } from "./types";
 
 // 新しいエフェクトシステム

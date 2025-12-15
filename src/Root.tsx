@@ -1,49 +1,42 @@
 import React from "react";
 import { loadFont } from "@remotion/google-fonts/NotoSansJP";
-import { RmbComposition } from "./lib";
-import { ShortsVideoWithMovieClass, movieData } from "./compositions/local/ShortsVideoWithMovieClass";
+import { RmbComposition, rmbProps } from "./lib";
+import { movieData } from "./compositions/local/ShortsVideoWithMovieClass";
 import {
-  Demo1BasicScenes,
-  demo1MovieData,
-  Demo2ImageScenes,
-  demo2MovieData,
-  Demo3TelopEffects,
-  demo3MovieData,
-  Demo4Transitions,
-  demo4MovieData,
-  Demo5Wipe,
-  demo5MovieData,
-  Demo6BatchTelop,
-  demo6MovieData,
-  Demo7TelopColors,
-  demo7MovieData,
-  Demo8Overlay,
-  demo8MovieData,
-  Demo9FixedElements,
-  demo9MovieData,
-  Demo10DisplayModes,
-  demo10MovieData,
+  demo1,
+  demo2,
+  demo3,
+  demo4,
+  demo5,
+  demo6,
+  demo7,
+  demo8,
+  demo9,
+  demo10,
 } from "./compositions/sample";
 
 // Noto Sans JP フォントをロード
 loadFont();
 
+// ShortsVideoWithMovieClass用
+const shortsVideo = rmbProps(movieData);
+
 export const RemotionRoot: React.FC = () => {
   return (
     <>
-      <RmbComposition id="ShortsVideoWithMovieClass" component={ShortsVideoWithMovieClass} movieData={movieData} />
+      <RmbComposition id="short" {...shortsVideo} />
 
       {/* サンプルデモ動画 */}
-      <RmbComposition id="Demo1BasicScenes" component={Demo1BasicScenes} movieData={demo1MovieData} />
-      <RmbComposition id="Demo2ImageScenes" component={Demo2ImageScenes} movieData={demo2MovieData} />
-      <RmbComposition id="Demo3TelopEffects" component={Demo3TelopEffects} movieData={demo3MovieData} />
-      <RmbComposition id="Demo4Transitions" component={Demo4Transitions} movieData={demo4MovieData} />
-      <RmbComposition id="Demo5Wipe" component={Demo5Wipe} movieData={demo5MovieData} />
-      <RmbComposition id="Demo6BatchTelop" component={Demo6BatchTelop} movieData={demo6MovieData} />
-      <RmbComposition id="Demo7TelopColors" component={Demo7TelopColors} movieData={demo7MovieData} />
-      <RmbComposition id="Demo8Overlay" component={Demo8Overlay} movieData={demo8MovieData} />
-      <RmbComposition id="Demo9FixedElements" component={Demo9FixedElements} movieData={demo9MovieData} />
-      <RmbComposition id="Demo10DisplayModes" component={Demo10DisplayModes} movieData={demo10MovieData} />
+      <RmbComposition id="demo1" {...demo1} />
+      <RmbComposition id="demo2" {...demo2} />
+      <RmbComposition id="demo3" {...demo3} />
+      <RmbComposition id="demo4" {...demo4} />
+      <RmbComposition id="demo5" {...demo5} />
+      <RmbComposition id="demo6" {...demo6} />
+      <RmbComposition id="demo7" {...demo7} />
+      <RmbComposition id="demo8" {...demo8} />
+      <RmbComposition id="demo9" {...demo9} />
+      <RmbComposition id="demo10" {...demo10} />
     </>
   );
 };

@@ -1,5 +1,4 @@
-import React from "react";
-import { Effects, Movie, MovieRenderer, TelopPresets, Transitions } from "../../lib";
+import { Effects, Movie, TelopPresets, Transitions, rmbProps } from "../../lib";
 
 /**
  * Demo4: トランジション（シーン切替）のデモ
@@ -104,6 +103,4 @@ const buildDemo4Movie = () => {
 
 export const demo4MovieData = buildDemo4Movie();
 
-export const Demo4Transitions: React.FC = () => {
-  return <MovieRenderer movieData={demo4MovieData} />;
-};
+export const demo4 = rmbProps(demo4MovieData);

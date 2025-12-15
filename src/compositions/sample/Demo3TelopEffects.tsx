@@ -1,5 +1,4 @@
-import React from "react";
-import { Effects, Movie, MovieRenderer, TelopPresets } from "../../lib";
+import { Effects, Movie, TelopPresets, rmbProps } from "../../lib";
 
 /**
  * Demo3: テロップエフェクトのショーケース
@@ -134,6 +133,4 @@ const buildDemo3Movie = () => {
 
 export const demo3MovieData = buildDemo3Movie();
 
-export const Demo3TelopEffects: React.FC = () => {
-  return <MovieRenderer movieData={demo3MovieData} />;
-};
+export const demo3 = rmbProps(demo3MovieData);

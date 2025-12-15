@@ -7,7 +7,7 @@
 ### コンストラクタ
 
 ```typescript
-const movie = new Movie(files: FileDefinition[]);
+const movie = new Rmbfiles: FileDefinition[]);
 ```
 
 #### FileDefinition
