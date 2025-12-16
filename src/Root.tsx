@@ -1,9 +1,8 @@
-import React from "react";
 import { loadFont } from "@remotion/google-fonts/NotoSansJP";
-import { RmbComposition, rmbProps } from "./lib";
-import { movieData } from "./compositions/local/ShortsVideoWithMovieClass";
+import React from "react";
 import {
   demo1,
+  demo10,
   demo2,
   demo3,
   demo4,
@@ -12,19 +11,16 @@ import {
   demo7,
   demo8,
   demo9,
-  demo10,
 } from "./compositions/sample";
+import { RmbComposition } from "./lib";
 
 // Noto Sans JP フォントをロード
 loadFont();
 
-// ShortsVideoWithMovieClass用
-const shortsVideo = rmbProps(movieData);
-
 export const RemotionRoot: React.FC = () => {
   return (
     <>
-      <RmbComposition id="short" {...shortsVideo} />
+      {/* <RmbComposition id="short" {...movie} /> */}
 
       {/* サンプルデモ動画 */}
       <RmbComposition id="demo1" {...demo1} />
