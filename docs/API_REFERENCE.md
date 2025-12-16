@@ -28,10 +28,10 @@ type TransitionDefaults = {
 };
 
 type TelopDefaults = {
-  effects?: TelopEffects;  // デフォルトエフェクト
-  overlay?: OverlayOptions; // デフォルトオーバーレイ
-  position?: TelopPosition; // デフォルト位置
-  charDuration?: number;   // 1文字あたりの表示秒数
+  effects?: TelopEffects;  // デフォルトエフェクト（デフォルト: なし）
+  overlay?: OverlayOptions; // デフォルトオーバーレイ（デフォルト: shadow）
+  position?: TelopPosition; // デフォルト位置（デフォルト: "bottom"）
+  charDuration?: number;   // 1文字あたりの表示秒数（デフォルト: 0.2）
   fontSize?: number;       // フォントサイズ（デフォルト: 48）
   color?: TelopColor;      // デフォルト色設定
 };

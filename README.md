@@ -51,9 +51,21 @@ npm run start
 動画全体を構築するメインクラス。
 
 ```typescript
-import { Movie } from "./lib";
+import { Movie, Transitions, TelopPresets } from "./lib";
 
+// 基本
 const movie = new Movie();
+
+// オプション付き
+const movie = new Movie({
+  size: "shorts",  // 縦長動画 (1080x1920)
+  transition: { type: Transitions.fade, duration: 1 },  // デフォルトトランジション
+  telop: {
+    effects: TelopPresets.simple,
+    position: "bottom 20%",
+    fontSize: 56,
+  },
+});
 ```
 
 | メソッド | 説明 | 戻り値 |
@@ -79,7 +91,6 @@ const scene = movie.scene("video.mp4", {
   trimBefore: 5,
   volume: 0.5,
   effect: [Effects.fadeIn],
-  overlay: { color: "0,0,0" },
 });
 
 // 画像シーン（拡張子で自動判別）
@@ -87,6 +98,15 @@ const imageScene = movie.scene("photo.jpg", { duration: 5 });
 
 // メディアなしシーン
 const textScene = movie.scene({ duration: 3 });
+
+// テロップのデフォルト設定付きシーン
+const styledScene = movie.scene("video.mp4", {
+  telop: {
+    position: "bottom 20%",
+    fontSize: 56,
+    overlay: { type: "gradient" },
+  },
+});
 ```
 
 | メソッド | 説明 | 戻り値 |
@@ -145,8 +165,18 @@ type SceneOptions = {
   trimBefore?: number;        // 先頭トリム秒数
   volume?: number;            // 動画の音量（0-1）
   effect?: EffectType[];      // エフェクト配列
-  overlay?: OverlayOptions;   // オーバーレイ設定
   bgmVolume?: number;         // このシーン中のBGM音量
+  displayMode?: DisplayMode;  // 表示モード
+  telop?: TelopDefaults;      // テロップのデフォルト設定
+};
+
+type TelopDefaults = {
+  effects?: TelopEffects;     // デフォルトエフェクト
+  overlay?: OverlayOptions;   // デフォルトオーバーレイ（デフォルト: shadow）
+  position?: TelopPosition;   // デフォルト位置
+  charDuration?: number;      // 1文字あたりの表示秒数
+  fontSize?: number;          // フォントサイズ（デフォルト: 48）
+  color?: TelopColor;         // デフォルト色設定
 };
 ```
 
@@ -377,7 +407,7 @@ movie.subtitle(srtContent, {
 
 ```typescript
 const movie = new Movie({
-  fontSize: 64,  // 全テロップに適用（デフォルト: 48）
+  telop: { fontSize: 64 },  // 全テロップに適用（デフォルト: 48）
 });
 ```
 
@@ -385,7 +415,7 @@ const movie = new Movie({
 
 ```typescript
 const scene = movie.scene("video.mp4", {
-  fontSize: 56,  // このシーンのテロップに適用
+  telop: { fontSize: 56 },  // このシーンのテロップに適用
 });
 ```
 
@@ -394,7 +424,7 @@ const scene = movie.scene("video.mp4", {
 ```typescript
 const opening = movie.opening({
   image: "title.png",
-  fontSize: 72,  // オープニングのテロップに適用
+  telop: { fontSize: 72 },  // オープニングのテロップに適用
 });
 ```
 
@@ -408,8 +438,8 @@ scene.telop("小さいテロップ", { fontSize: 32 });
 ### 優先順位
 
 1. テロップ個別の `fontSize`
-2. シーン/Opening/Ending の `fontSize`
-3. Movie の `fontSize`
+2. シーン/Opening/Ending の `telop.fontSize`
+3. Movie の `telop.fontSize`
 4. デフォルト値 `48`
 
 ---
@@ -442,7 +472,9 @@ import {
   type ExitEffectType,
   type EmphasisEffectType,
   type TelopEffects,
+  type TelopDefaults,
   type TransitionType,
+  type TransitionDefaults,
   type SceneOptions,
   type WipeOptions,
   type WipePosition,
