@@ -1,16 +1,26 @@
 {
-  "name": "remotion",
-  "version": "1.0.0",
-  "description": "Video editing with Remotion",
+  "name": "remotion-movie-builder",
+  "version": "0.1.0",
+  "description": "A builder pattern library for declarative video creation with Remotion",
   "scripts": {
     "start": "remotion studio",
     "build": "remotion bundle",
     "render": "remotion render ShortsVideo out.mp4",
     "render:shorts": "remotion render ShortsVideo --props"
   },
-  "keywords": [],
+  "keywords": [
+    "remotion",
+    "video",
+    "builder",
+    "react",
+    "animation"
+  ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/remotion-movie-builder"
+  },
   "type": "module",
   "dependencies": {
     "@remotion/animated-emoji": "^4.0.390",
