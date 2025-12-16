@@ -36,6 +36,7 @@ export class Movie {
   private _defaultTransitionDuration: number;
   private _defaultOverlay?: OverlayOptions;
   private _defaultTelopPosition?: string;
+  private _defaultCharDuration?: number;
 
   constructor(options?: MovieOptions) {
     this._fps = options?.fps ?? 30;
@@ -53,6 +54,7 @@ export class Movie {
     this._defaultTransitionDuration = options?.transitionDuration ?? 3;
     this._defaultOverlay = options?.overlay;
     this._defaultTelopPosition = options?.telopPosition;
+    this._defaultCharDuration = options?.charDuration;
   }
 
   /**
@@ -76,7 +78,7 @@ export class Movie {
   /**
    * オプションにMovieのデフォルト設定をマージ
    */
-  private _mergeDefaultsToOptions<T extends { effects?: TelopEffects; overlay?: OverlayOptions; telopPosition?: string }>(options: T): T {
+  private _mergeDefaultsToOptions<T extends { effects?: TelopEffects; overlay?: OverlayOptions; telopPosition?: string; charDuration?: number }>(options: T): T {
     let result = { ...options };
 
     // デフォルトエフェクトをマージ
@@ -92,6 +94,11 @@ export class Movie {
     // デフォルトテロップ位置をマージ（シーン個別指定がなければ）
     if (this._defaultTelopPosition && !options.telopPosition) {
       result.telopPosition = this._defaultTelopPosition;
+    }
+
+    // デフォルトcharDurationをマージ（シーン個別指定がなければ）
+    if (this._defaultCharDuration !== undefined && options.charDuration === undefined) {
+      result.charDuration = this._defaultCharDuration;
     }
 
     return result;

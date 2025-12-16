@@ -110,6 +110,7 @@ export type OpeningEndingOptions = {
   overlay?: OverlayOptions; // デフォルトオーバーレイ
   telopPosition?: TelopPosition; // デフォルトテロップ位置（"bottom", "top 20%"など）
   displayMode?: DisplayMode; // 表示モード（デフォルト: cover）
+  charDuration?: number; // 1文字あたりの表示秒数（デフォルト: 0.2）
 };
 
 // 動画サイズのプリセット
@@ -145,6 +146,7 @@ export type MovieOptions = {
   transitionDuration?: number; // デフォルトトランジション秒数（デフォルト: 3）
   overlay?: OverlayOptions; // デフォルトオーバーレイ（全テロップに適用）
   telopPosition?: TelopPosition; // デフォルトテロップ位置（"bottom", "top 20%"など）
+  charDuration?: number; // 1文字あたりの表示秒数（デフォルト: 0.2）
 };
 
 // シーンのオプション
@@ -160,6 +162,7 @@ export type SceneOptions = {
   loop?: boolean; // シーンより短い動画をループ再生（デフォルト: true）
   backgroundColor?: string; // 背景色（例: "#ffffff", "#000000"）
   displayMode?: DisplayMode; // 表示モード（デフォルト: cover）
+  charDuration?: number; // 1文字あたりの表示秒数（デフォルト: 0.2）
 };
 
 // ワイプの位置
@@ -315,6 +318,7 @@ export type TelopOptions = {
   emoji?: EmojiName; // AnimatedEmoji（テキストの後ろに表示）
   color?: TelopColor; // 色設定
   sfx?: string | TelopSfxOptions; // 効果音（ファイル名 or オプション）
+  charDuration?: number; // 1文字あたりの表示秒数（個別指定）
 };
 
 // テロップのデータ

@@ -4,12 +4,13 @@
 
 /**
  * 文字数からテロップのdurationを計算
- * - 基本: 0.2秒/文字
- * - 10文字増える毎に0.01秒短縮（最小0.15秒/文字）
+ * @param text テロップのテキスト
+ * @param charDuration 1文字あたりの秒数（デフォルト: 0.2）
+ * - 10文字増える毎に0.01秒短縮（最小0.15秒/文字、またはcharDurationの75%）
  * - 1バイト文字（英数字など）は0.5倍の時間
  * - 最低2秒、エフェクト用に+1秒
  */
-export function calculateTelopDuration(text: string): number {
+export function calculateTelopDuration(text: string, charDuration: number = 0.2): number {
   const effectTime = 1; // エフェクト用の余白
 
   // 全角・半角を分けてカウント
@@ -26,10 +27,11 @@ export function calculateTelopDuration(text: string): number {
   }
 
   // 文字数に基づいて1文字あたりの時間を計算
-  // 基本: 0.2秒/文字、10文字毎に0.01秒短縮、最小0.15秒
+  // 基本: charDuration秒/文字、10文字毎に0.01秒短縮、最小はcharDurationの75%
   const totalChars = fullWidthCount + halfWidthCount;
   const reduction = Math.floor(totalChars / 10) * 0.01;
-  const timePerChar = Math.max(0.15, 0.2 - reduction);
+  const minTimePerChar = charDuration * 0.75;
+  const timePerChar = Math.max(minTimePerChar, charDuration - reduction);
 
   // 全角文字は基本時間、半角文字は0.5倍
   const readingTime = fullWidthCount * timePerChar + halfWidthCount * timePerChar * 0.5;

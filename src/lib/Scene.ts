@@ -41,6 +41,7 @@ export class Scene {
   readonly defaultOverlay?: OverlayOptions;
   readonly defaultEffects?: TelopEffects;
   readonly defaultTelopPosition?: string;
+  readonly defaultCharDuration?: number;
   readonly bgmVolume?: number;
   readonly volume?: number;
   readonly loop?: boolean;
@@ -63,6 +64,7 @@ export class Scene {
     this.defaultOverlay = options.overlay;
     this.defaultEffects = options.effects;
     this.defaultTelopPosition = options.telopPosition;
+    this.defaultCharDuration = options.charDuration;
     this.bgmVolume = options.bgmVolume;
     this.volume = options.volume;
     // trimBeforeがある場合はloopを無効化（Loopコンポーネントで負のdurationになる問題回避）
@@ -145,7 +147,8 @@ export class Scene {
    * テロップを内部的に追加
    */
   private _addTelop(text: string, startTime: number, options: TelopOptions): void {
-    const duration = options.duration ?? calculateTelopDuration(text);
+    const charDuration = options.charDuration ?? this.defaultCharDuration;
+    const duration = options.duration ?? calculateTelopDuration(text, charDuration);
     const sfx = normalizeSfx(options.sfx);
 
     const telopData: TelopData = {

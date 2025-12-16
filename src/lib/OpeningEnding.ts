@@ -8,6 +8,7 @@ export class OpeningEnding {
   readonly defaultEffects?: TelopEffects;
   readonly defaultTelopPosition?: string;
   readonly defaultOverlay?: OverlayOptions;
+  readonly defaultCharDuration?: number;
   readonly displayMode?: DisplayMode;
   private _telops: TelopData[] = [];
   private _currentTime: number = 0;
@@ -23,6 +24,7 @@ export class OpeningEnding {
     this.defaultEffects = options.effects;
     this.defaultTelopPosition = options.telopPosition;
     this.defaultOverlay = options.overlay;
+    this.defaultCharDuration = options.charDuration;
     this.displayMode = options.displayMode;
   }
 
@@ -84,7 +86,8 @@ export class OpeningEnding {
    * テロップを内部的に追加
    */
   private _addTelop(text: string, startTime: number, options: TelopOptions): void {
-    const duration = options.duration ?? calculateTelopDuration(text);
+    const charDuration = options.charDuration ?? this.defaultCharDuration;
+    const duration = options.duration ?? calculateTelopDuration(text, charDuration);
     const sfx = normalizeSfx(options.sfx);
 
     const telopData: TelopData = {
