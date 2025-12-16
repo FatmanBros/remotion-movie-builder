@@ -22,7 +22,6 @@ const movie = () => {
     trimBefore: 0,
     volume: 0.3,
     effect: [Effects.fadeIn, Effects.fadeOut],
-    overlay: { color: "0,0,0" },
   });
   scene1
     .telop("動画シーンの作成")
@@ -34,7 +33,6 @@ const movie = () => {
     trimBefore: 5,
     volume: 0.3,
     effect: [Effects.fadeIn, Effects.fadeOut],
-    overlay: { color: "0,0,0" },
   });
   scene2
     .telop("複数のテロップを連続追加")

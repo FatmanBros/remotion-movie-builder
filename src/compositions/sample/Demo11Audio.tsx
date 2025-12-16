@@ -14,6 +14,7 @@ const movie = () => {
   const opening = movie.opening({
     image: "sample/images/sample_background.png",
     effect: Effects.fadeOut,
+    telop: { overlay: { color: "0,0,0" } },
   });
   opening
     .telop("オーディオ機能デモ")
@@ -33,7 +34,6 @@ const movie = () => {
     trimBefore: 0,
     volume: 0.3,
     effect: [Effects.fadeIn, Effects.fadeOut],
-    overlay: { color: "0,0,0" },
   });
   scene1
     .telop("movie.bgm() でBGMを追加")
@@ -45,7 +45,6 @@ const movie = () => {
     trimBefore: 5,
     volume: 0.3,
     effect: [Effects.fadeIn, Effects.fadeOut],
-    overlay: { color: "0,0,0" },
   });
   scene2
     .telop("movie.audio() でグローバル音声")
@@ -57,7 +56,6 @@ const movie = () => {
     trimBefore: 0,
     volume: 0.3,
     effect: [Effects.fadeIn, Effects.fadeOut],
-    overlay: { color: "0,0,0" },
   });
   scene3
     .telop("scene.audio() でシーン内音声")
@@ -69,7 +67,6 @@ const movie = () => {
     trimBefore: 0,
     volume: 0.3,
     effect: [Effects.fadeIn, Effects.fadeOut],
-    overlay: { color: "0,0,0" },
   });
   scene4
     .telop("テロップにSFXを追加", {

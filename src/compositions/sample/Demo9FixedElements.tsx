@@ -10,6 +10,7 @@ const buildDemo9Movie = () => {
   const movie = new Movie({
     transition: Transitions.fade,
     transitionDuration: 1,
+    telop: { overlay: { type: "gradient" } },
   });
 
   // Movie全体の固定要素
@@ -42,7 +43,6 @@ const buildDemo9Movie = () => {
   // シーン1: Movie固定要素の説明
   const scene1 = movie.scene("sample/movies/sample1.mp4", {
     trimBefore: 5,
-    overlay: { type: "gradient" },
   });
   scene1.telop("movie.fixedImage()");
   scene1.telop("右上にロゴが常時表示");
@@ -52,7 +52,6 @@ const buildDemo9Movie = () => {
   // シーン2: Scene固定要素
   const scene2 = movie.scene("sample/movies/sample1.mp4", {
     trimBefore: 15,
-    overlay: { type: "gradient" },
   });
   scene2.fixedText("Scene 2", {
     position: "top-left",
@@ -70,7 +69,6 @@ const buildDemo9Movie = () => {
   // シーン3: 位置のデモ（top-center）
   const scene3 = movie.scene("sample/movies/sample1.mp4", {
     trimBefore: 25,
-    overlay: { type: "gradient" },
   });
   scene3.fixedText("top-center", {
     position: "top-center",
@@ -87,7 +85,6 @@ const buildDemo9Movie = () => {
   // シーン4: 位置のデモ（bottom-center）
   const scene4 = movie.scene("sample/movies/sample1.mp4", {
     trimBefore: 35,
-    overlay: { type: "gradient" },
   });
   scene4.fixedText("bottom-center", {
     position: "bottom-center",
@@ -104,7 +101,6 @@ const buildDemo9Movie = () => {
   // シーン5: 複数の固定要素
   const scene5 = movie.scene("sample/movies/sample1.mp4", {
     trimBefore: 45,
-    overlay: { type: "gradient" },
   });
   scene5.fixedText("LIVE", {
     position: "top-left",
@@ -130,7 +126,6 @@ const buildDemo9Movie = () => {
   // シーン6: 固定画像（Scene単位）
   const scene6 = movie.scene("sample/movies/sample1.mp4", {
     trimBefore: 55,
-    overlay: { type: "gradient" },
   });
   scene6.fixedImage("sample/images/sample2.png", {
     position: "bottom-right",

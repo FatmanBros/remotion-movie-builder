@@ -102,16 +102,22 @@ export type TelopEffects = {
   emphasis?: EmphasisEffectType;
 };
 
+// テロップのデフォルト設定（Movie/Scene/Opening/Ending用）
+export type TelopDefaults = {
+  effects?: TelopEffects;    // デフォルトエフェクト
+  overlay?: OverlayOptions;  // デフォルトオーバーレイ
+  position?: TelopPosition;  // デフォルト位置（"bottom", "top 20%"など）
+  charDuration?: number;     // 1文字あたりの表示秒数（デフォルト: 0.2）
+  fontSize?: number;         // フォントサイズ（デフォルト: 48）
+  color?: TelopColor;        // デフォルト色設定
+};
+
 // オープニング・エンディングのオプション
 export type OpeningEndingOptions = {
   image: string;
   effect?: EffectType;
-  effects?: TelopEffects; // デフォルトテロップエフェクト
-  overlay?: OverlayOptions; // デフォルトオーバーレイ
-  telopPosition?: TelopPosition; // デフォルトテロップ位置（"bottom", "top 20%"など）
   displayMode?: DisplayMode; // 表示モード（デフォルト: cover）
-  charDuration?: number; // 1文字あたりの表示秒数（デフォルト: 0.2）
-  fontSize?: number; // テロップのベースフォントサイズ（デフォルト: 48）
+  telop?: TelopDefaults;     // テロップのデフォルト設定
 };
 
 // 動画サイズのプリセット
@@ -142,13 +148,9 @@ export type MovieOptions = {
   width?: number; // 幅（デフォルト: 1920）
   height?: number; // 高さ（デフォルト: 1080）
   size?: VideoSizePreset; // サイズプリセット（width/heightより優先）
-  effects?: TelopEffects; // デフォルトテロップエフェクト（全シーン・プロローグ・エピローグに適用）
   transition?: TransitionType; // デフォルトトランジション（全シーン間に適用）
   transitionDuration?: number; // デフォルトトランジション秒数（デフォルト: 3）
-  overlay?: OverlayOptions; // デフォルトオーバーレイ（全テロップに適用）
-  telopPosition?: TelopPosition; // デフォルトテロップ位置（"bottom", "top 20%"など）
-  charDuration?: number; // 1文字あたりの表示秒数（デフォルト: 0.2）
-  fontSize?: number; // テロップのベースフォントサイズ（デフォルト: 48）
+  telop?: TelopDefaults;   // テロップのデフォルト設定（全シーン・プロローグ・エピローグに適用）
 };
 
 // シーンのオプション
@@ -156,16 +158,12 @@ export type SceneOptions = {
   duration?: number; // 秒数（省略時はテロップ長から自動計算）
   effect?: EffectType[];
   trimBefore?: number; // 動画の開始位置（秒）
-  overlay?: OverlayOptions; // デフォルトオーバーレイ（全テロップに適用）
-  effects?: TelopEffects; // デフォルトテロップエフェクト（全テロップに適用）
-  telopPosition?: TelopPosition; // デフォルトテロップ位置（"bottom", "top 20%"など）
   bgmVolume?: number; // このシーン中のBGM音量（0-1、省略時はグローバル設定）
   volume?: number; // 動画の音量（0-1、デフォルト1）
   loop?: boolean; // シーンより短い動画をループ再生（デフォルト: true）
   backgroundColor?: string; // 背景色（例: "#ffffff", "#000000"）
   displayMode?: DisplayMode; // 表示モード（デフォルト: cover）
-  charDuration?: number; // 1文字あたりの表示秒数（デフォルト: 0.2）
-  fontSize?: number; // テロップのベースフォントサイズ（デフォルト: 48）
+  telop?: TelopDefaults;   // テロップのデフォルト設定
 };
 
 // ワイプの位置
@@ -264,7 +262,7 @@ export type WipeData = {
 export type OverlayType = "gradient" | "box" | "shadow";
 
 export type OverlayOptions = {
-  type?: OverlayType; // オーバーレイの種類（デフォルト: gradient）
+  type?: OverlayType; // オーバーレイの種類（デフォルト: shadow）
   color?: string; // 色（"#000000" or "0,0,0"形式）デフォルト #000000
   height?: string; // gradient用: 高さ、デフォルト 50%
   padding?: number; // box用: パディング, shadow用: ぼかしサイズ（px）デフォルト 16

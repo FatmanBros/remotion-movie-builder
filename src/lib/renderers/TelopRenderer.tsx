@@ -49,7 +49,7 @@ export const TelopRenderer: React.FC<{
   // フォントサイズ（デフォルト: 48）
   const fontSize = telop.fontSize ?? 48;
 
-  const overlayType = telop.overlay?.type ?? "gradient";
+  const overlayType = telop.overlay?.type ?? "shadow";
   const overlayColor = parseColorToRgb(telop.overlay?.color ?? "#000000");
   const overlayOpacity = telop.overlay?.opacity ?? 0.7;
 
@@ -97,10 +97,11 @@ export const TelopRenderer: React.FC<{
   };
 
   // シャドーオーバーレイ用のtext-shadow（文字の形でぼかし）
+  // デフォルトで適用されるため、telop.overlay が undefined でも適用
   const getShadowTextShadow = (): string | null => {
-    if (!telop.overlay || overlayType !== "shadow") return null;
+    if (overlayType !== "shadow") return null;
 
-    const blur = telop.overlay.padding ?? 16; // blurの大きさ
+    const blur = telop.overlay?.padding ?? 16; // blurの大きさ
     // 複数方向にぼかしシャドーをかけて文字の形を強調
     return `
       0 0 ${blur}px rgba(${overlayColor}, ${overlayOpacity}),

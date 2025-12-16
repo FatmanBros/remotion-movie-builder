@@ -9,7 +9,7 @@ import { Effects, Movie, TelopPresets, Transitions, rmbProps } from "../../lib";
  */
 const buildDemo4Movie = () => {
   const movie = new Movie({
-    effects: TelopPresets.simple,
+    telop: { effects: TelopPresets.simple },
   });
 
   // プロローグ
@@ -23,7 +23,6 @@ const buildDemo4Movie = () => {
   const scene1 = movie.scene("sample/movies/sample1.mp4", {
     trimBefore: 0,
     volume: 0.2,
-    overlay: { color: "0,0,0" },
   });
   scene1.telop("fade トランジション").telop("デフォルトのクロスフェード");
 
@@ -31,7 +30,6 @@ const buildDemo4Movie = () => {
   const scene2 = movie.scene("sample/movies/sample2.mp4", {
     trimBefore: 2,
     volume: 0.2,
-    overlay: { color: "0,0,0" },
   });
   scene1.transitionTo(scene2, { duration: 1, transition: Transitions.fade });
   scene2.telop("wipeLeft").telop("左からワイプ");
@@ -40,7 +38,6 @@ const buildDemo4Movie = () => {
   const scene3 = movie.scene("sample/movies/sample3.mp4", {
     trimBefore: 3,
     volume: 0.2,
-    overlay: { color: "0,0,0" },
   });
   scene2.transitionTo(scene3, { duration: 1, transition: Transitions.wipeLeft });
   scene3.telop("slideUp").telop("上にスライド");
@@ -49,21 +46,18 @@ const buildDemo4Movie = () => {
   const scene4 = movie.scene("sample/movies/sample4.mp4", {
     trimBefore: 0,
     volume: 0.2,
-    overlay: { color: "0,0,0" },
   });
   scene3.transitionTo(scene4, { duration: 1, transition: Transitions.slideUp });
   scene4.telop("zoomIn").telop("ズームインで切替");
 
   // シーン5: 画像シーンでさらにデモ
   const scene5 = movie.scene("sample/images/sample1.png", {
-    overlay: { color: "0,0,0" },
   });
   scene4.transitionTo(scene5, { duration: 1, transition: Transitions.zoomIn });
   scene5.telop("flipLeft").telop("左端を軸に回転");
 
   // シーン6
   const scene6 = movie.scene("sample/images/sample2.png", {
-    overlay: { color: "0,0,0" },
   });
   scene5.transitionTo(scene6, { duration: 1, transition: Transitions.flipLeft });
   scene6

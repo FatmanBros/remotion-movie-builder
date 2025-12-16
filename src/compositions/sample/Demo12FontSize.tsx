@@ -11,15 +11,17 @@ import { Effects, Movie, rmbProps, TelopColors } from "../../lib";
 const movie = () => {
   // Movie全体のデフォルトフォントサイズを64に設定
   const movie = new Movie({
-    fontSize: 64,
-    overlay: { color: "0,0,0" },
+    telop: {
+      fontSize: 64,
+      overlay: { color: "0,0,0" },
+    },
   });
 
   // オープニング: fontSize: 72 を指定
   const opening = movie.opening({
     image: "sample/images/sample_background.png",
     effect: Effects.fadeOut,
-    fontSize: 72,
+    telop: { fontSize: 72 },
   });
   opening.telop("フォントサイズ デモ", { before: 0.3 });
   opening.telop("Opening fontSize: 72");
@@ -40,7 +42,7 @@ const movie = () => {
     trimBefore: 5,
     volume: 0.3,
     effect: [Effects.fadeIn, Effects.fadeOut],
-    fontSize: 48,
+    telop: { fontSize: 48 },
   });
   scene2
     .telop("シーン fontSize: 48")
@@ -63,7 +65,7 @@ const movie = () => {
     trimBefore: 15,
     volume: 0.3,
     effect: [Effects.fadeIn, Effects.fadeOut],
-    fontSize: 56, // シーンで56を指定
+    telop: { fontSize: 56 }, // シーンで56を指定
   });
   scene4
     .telop("シーン指定: 56")
@@ -74,7 +76,7 @@ const movie = () => {
   const ending = movie.ending({
     image: "sample/images/sample_background.png",
     effect: Effects.fadeIn,
-    fontSize: 72,
+    telop: { fontSize: 72 },
   });
   ending.telop("フォントサイズ デモ終了");
 

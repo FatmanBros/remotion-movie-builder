@@ -8,7 +8,6 @@ import { Effects, Movie, rmbProps } from "../../lib";
  */
 const buildDemo6Movie = () => {
   const movie = new Movie({
-    overlay: { color: "0,0,0" },
   });
 
   // プロローグ
@@ -47,7 +46,6 @@ const buildDemo6Movie = () => {
 
   // シーン4: 長いテロップの位置調整
   const scene4 = movie.scene("sample/images/sample4.png", {
-    overlay: { color: "0,0,0" },
   });
   scene4.telop(
     "長いテロップがあっても大丈夫です。横幅から正確に高さを計算して配置を調整します。折り返しがあっても重なりません。"

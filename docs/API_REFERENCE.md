@@ -14,7 +14,22 @@ const movie = new Movie(options?: MovieOptions);
 
 ```typescript
 type MovieOptions = {
-  fontSize?: number;    // テロップのデフォルトフォントサイズ（デフォルト: 48）
+  fps?: number;         // FPS（デフォルト: 30）
+  width?: number;       // 幅（デフォルト: 1920）
+  height?: number;      // 高さ（デフォルト: 1080）
+  size?: VideoSizePreset; // "standard" | "shorts" などのプリセット
+  transition?: TransitionType; // デフォルトトランジション
+  transitionDuration?: number; // デフォルトトランジション秒数
+  telop?: TelopDefaults; // テロップのデフォルト設定
+};
+
+type TelopDefaults = {
+  effects?: TelopEffects;  // デフォルトエフェクト
+  overlay?: OverlayOptions; // デフォルトオーバーレイ
+  position?: TelopPosition; // デフォルト位置
+  charDuration?: number;   // 1文字あたりの表示秒数
+  fontSize?: number;       // フォントサイズ（デフォルト: 48）
+  color?: TelopColor;      // デフォルト色設定
 };
 ```
 
@@ -45,8 +60,7 @@ const opening = movie.opening(duration: number, options: OpeningEndingOptions);
 | `options.image` | `string` | 表示する画像ファイル |
 | `options.effect` | `EffectType` | フェードエフェクト（`fadeIn` / `fadeOut`） |
 | `options.displayMode` | `DisplayMode` | 表示モード |
-| `options.telopPosition` | `string` | テロップのデフォルト位置 |
-| `options.fontSize` | `number` | テロップのフォントサイズ（デフォルト: 48） |
+| `options.telop` | `TelopDefaults` | テロップのデフォルト設定（position, fontSize, effects, overlay, charDuration, color） |
 
 #### `scene(key, options)`
 
@@ -58,12 +72,13 @@ const scene = movie.scene(key: string, options: SceneOptions);
 
 | パラメータ | 型 | 説明 |
 |-----------|------|------|
-| `key` | `string` | ファイル定義のキー |
+| `key` | `string` | ファイル定義のキー、または動画/画像ファイルパス |
 | `options.duration` | `number` | 表示秒数 |
 | `options.trimBefore` | `number` | 動画の開始位置（秒） |
 | `options.effect` | `EffectType \| EffectType[]` | エフェクト |
-| `options.overlay` | `OverlayOptions` | オーバーレイ設定 |
-| `options.fontSize` | `number` | テロップのフォントサイズ（デフォルト: 48） |
+| `options.volume` | `number` | 動画の音量（0-1） |
+| `options.displayMode` | `DisplayMode` | 表示モード |
+| `options.telop` | `TelopDefaults` | テロップのデフォルト設定（position, fontSize, effects, overlay, charDuration, color） |
 
 #### `ending(options)` / `ending(duration, options)`
 

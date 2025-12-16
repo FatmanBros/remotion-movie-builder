@@ -1,15 +1,11 @@
-import { EffectType, TelopData, TelopOptions, TelopEffects, OpeningEndingOptions, DisplayMode, OverlayOptions } from "./types";
+import { EffectType, TelopData, TelopOptions, TelopDefaults, OpeningEndingOptions, DisplayMode } from "./types";
 import { calculateTelopDuration, normalizeSfx } from "./utils/telopUtils";
 
 export class OpeningEnding {
   private _explicitDuration?: number;
   readonly image: string;
   readonly effect?: EffectType;
-  readonly defaultEffects?: TelopEffects;
-  readonly defaultTelopPosition?: string;
-  readonly defaultOverlay?: OverlayOptions;
-  readonly defaultCharDuration?: number;
-  readonly defaultFontSize?: number;
+  readonly defaultTelop?: TelopDefaults;
   readonly displayMode?: DisplayMode;
   private _telops: TelopData[] = [];
   private _currentTime: number = 0;
@@ -22,11 +18,7 @@ export class OpeningEnding {
     this._explicitDuration = duration;
     this.image = options.image;
     this.effect = options.effect;
-    this.defaultEffects = options.effects;
-    this.defaultTelopPosition = options.telopPosition;
-    this.defaultOverlay = options.overlay;
-    this.defaultCharDuration = options.charDuration;
-    this.defaultFontSize = options.fontSize;
+    this.defaultTelop = options.telop;
     this.displayMode = options.displayMode;
   }
 
@@ -88,7 +80,7 @@ export class OpeningEnding {
    * テロップを内部的に追加
    */
   private _addTelop(text: string, startTime: number, options: TelopOptions): void {
-    const charDuration = options.charDuration ?? this.defaultCharDuration;
+    const charDuration = options.charDuration ?? this.defaultTelop?.charDuration;
     const duration = options.duration ?? calculateTelopDuration(text, charDuration);
     const sfx = normalizeSfx(options.sfx);
 
@@ -96,13 +88,13 @@ export class OpeningEnding {
       text,
       startTime,
       duration,
-      effects: options.effects ?? this.defaultEffects,
-      position: options.position ?? this.defaultTelopPosition ?? "bottom",
-      overlay: options.overlay ?? this.defaultOverlay,
+      effects: options.effects ?? this.defaultTelop?.effects,
+      position: options.position ?? this.defaultTelop?.position ?? "bottom",
+      overlay: options.overlay ?? this.defaultTelop?.overlay,
       emoji: options.emoji,
-      color: options.color,
+      color: options.color ?? this.defaultTelop?.color,
       sfx,
-      fontSize: options.fontSize ?? this.defaultFontSize,
+      fontSize: options.fontSize ?? this.defaultTelop?.fontSize,
     };
 
     this._telops.push(telopData);

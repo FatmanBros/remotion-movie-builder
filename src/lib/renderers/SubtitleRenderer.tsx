@@ -190,7 +190,7 @@ export const SubtitleRenderer: React.FC<{
   const textFontSize = mergedFontSize;
 
   // オーバーレイ設定
-  const overlayType = overlay?.type ?? "gradient";
+  const overlayType = overlay?.type ?? "shadow";
   const overlayColor = parseColorToRgb(overlay?.color ?? "#000000");
   const overlayOpacity = overlay?.opacity ?? 0.7;
 

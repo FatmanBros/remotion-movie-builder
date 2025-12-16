@@ -22,7 +22,6 @@ const buildDemo2Movie = () => {
   // 画像シーン1
   const imageScene1 = movie.scene("sample/images/sample1.png", {
     effect: [Effects.fadeIn, Effects.fadeOut],
-    overlay: { color: "0,0,0" },
   });
   imageScene1
     .telop("画像ファイルも使えます")
@@ -31,7 +30,6 @@ const buildDemo2Movie = () => {
   // 画像シーン2
   const imageScene2 = movie.scene("sample/images/sample2.png", {
     effect: [Effects.fadeIn, Effects.fadeOut],
-    overlay: { color: "0,0,0" },
   });
   imageScene2
     .telop("シーンのdurationは自動計算")
@@ -40,7 +38,6 @@ const buildDemo2Movie = () => {
   // 画像シーン3
   const imageScene3 = movie.scene("sample/images/sample3.png", {
     effect: [Effects.fadeIn, Effects.fadeOut],
-    overlay: { color: "0,0,0" },
   });
   imageScene3
     .telop("テロップのdurationも自動計算")
@@ -50,7 +47,6 @@ const buildDemo2Movie = () => {
   // 画像シーン4
   const imageScene4 = movie.scene("sample/images/sample4.png", {
     effect: [Effects.fadeIn, Effects.fadeOut],
-    overlay: { color: "0,0,0" },
   });
   imageScene4
     .telop("短いテロップは短く")

@@ -8,7 +8,7 @@ import { Effects, Movie, TelopPresets, rmbProps } from "../../lib";
  */
 const buildDemo5Movie = () => {
   const movie = new Movie({
-    effects: TelopPresets.simple,
+    telop: { effects: TelopPresets.simple },
   });
 
   // プロローグ
@@ -22,7 +22,6 @@ const buildDemo5Movie = () => {
   const scene1 = movie.scene("sample/movies/sample1.mp4", {
     trimBefore: 0,
     volume: 0.2,
-    overlay: { color: "0,0,0" },
   });
   scene1.wipe("sample/movies/sample2.mp4", {
     position: "bottom-right",
@@ -40,7 +39,6 @@ const buildDemo5Movie = () => {
   const scene2 = movie.scene("sample/movies/sample2.mp4", {
     trimBefore: 3,
     volume: 0.2,
-    overlay: { color: "0,0,0" },
   });
   scene2.wipe("sample/movies/sample3.mp4", {
     position: "top-left",
@@ -56,7 +54,6 @@ const buildDemo5Movie = () => {
   const scene3 = movie.scene("sample/movies/sample3.mp4", {
     trimBefore: 5,
     volume: 0.2,
-    overlay: { color: "0,0,0" },
   });
   scene3.wipe("sample/movies/sample4.mp4", {
     position: "top-right",
@@ -72,7 +69,6 @@ const buildDemo5Movie = () => {
   const scene4 = movie.scene("sample/movies/sample1.mp4", {
     trimBefore: 10,
     volume: 0.2,
-    overlay: { color: "0,0,0" },
   });
   scene4.wipe("sample/movies/sample2.mp4", {
     position: "bottom-left",
@@ -90,7 +86,6 @@ const buildDemo5Movie = () => {
     trimBefore: 8,
     duration: 12,  // 明示的に12秒のシーン
     volume: 0.2,
-    overlay: { color: "0,0,0" },
   });
   scene5.wipe("sample/movies/sample3.mp4", {
     position: "bottom-right",

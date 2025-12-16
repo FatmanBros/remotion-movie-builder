@@ -25,7 +25,7 @@ const buildDemo10Movie = () => {
   const movie = new Movie({
     transition: Transitions.fade,
     transitionDuration: 1,
-    overlay: { type: "shadow", color: "#999999" }
+    telop: { overlay: { type: "shadow", color: "#999999" } },
   });
 
   // プロローグ
@@ -232,7 +232,7 @@ const buildDemo10Movie = () => {
   // シーン24: シーン単位のデフォルト位置
   const scene24 = movie.scene("sample/movies/sample1.mp4", {
     displayMode: "cover",
-    telopPosition: "top 10%",
+    telop: { position: "top 10%" },
   });
   scene24.telop("シーン単位のデフォルト位置");
   scene24.telop("telopPosition: 'top 10%'");
@@ -242,7 +242,7 @@ const buildDemo10Movie = () => {
   const scene25 = movie.scene("sample/movies/sample1.mp4", {
     displayMode: "cinemascope",
     backgroundColor: "#000000",
-    telopPosition: "bottom 25%",
+    telop: { position: "bottom 25%" },
   });
   scene25.telop("映画風 + テロップ位置");
   scene25.telop("シネマスコープ + 下25%");

@@ -19,7 +19,6 @@ const buildDemo8Movie = () => {
   // シーン1: gradient（デフォルト）
   const scene1 = movie.scene("sample/movies/sample1.mp4", {
     trimBefore: 5,
-    overlay: { type: "gradient", color: "0,0,0" },
   });
   scene1.telop("overlay: { type: 'gradient' }");
   scene1.telop("画面端からのグラデーション");
@@ -28,7 +27,6 @@ const buildDemo8Movie = () => {
   // シーン2: gradient（上部）
   const scene2 = movie.scene("sample/movies/sample1.mp4", {
     trimBefore: 10,
-    overlay: { type: "gradient", color: "0,0,0" },
   });
   scene2.telop("position: 'top' でも使える", { position: "top" });
   scene2.telop("上部グラデーション", { position: "top" });
@@ -61,8 +59,6 @@ const buildDemo8Movie = () => {
   // シーン5: shadow
   const scene5 = movie.scene({
     backgroundColor: "#ffffff",
-    trimBefore: 25,
-    overlay: { type: "shadow", color: "0,0,0", opacity: 0.7 },
   });
   scene5.telop("overlay: { type: 'shadow' }");
   scene5.telop("シャドー付きで立体感", { color: TelopColors.doubleBlue });
@@ -71,7 +67,6 @@ const buildDemo8Movie = () => {
   // シーン6: Movie全体にデフォルト設定
   const scene6 = movie.scene("sample/movies/sample1.mp4", {
     trimBefore: 30,
-    overlay: { type: "box", color: "50,50,50", opacity: 0.8 },
   });
   scene6.telop("new Movie({ overlay: {...} })");
   scene6.telop("全シーンに一括適用できる");

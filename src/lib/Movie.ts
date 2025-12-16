@@ -13,8 +13,7 @@ import {
   MovieData,
   MovieOptions,
   TransitionType,
-  TelopEffects,
-  OverlayOptions,
+  TelopDefaults,
   FixedElementData,
   FixedImageOptions,
   FixedTextOptions,
@@ -35,13 +34,9 @@ export class Movie {
   private _fixedElements: FixedElementData[] = [];
   private _subtitles?: SubtitleData;
   private _currentTime: number = 0;
-  private _defaultEffects?: TelopEffects;
+  private _defaultTelop?: TelopDefaults;
   private _defaultTransition?: TransitionType;
   private _defaultTransitionDuration: number;
-  private _defaultOverlay?: OverlayOptions;
-  private _defaultTelopPosition?: string;
-  private _defaultCharDuration?: number;
-  private _defaultFontSize?: number;
 
   constructor(options?: MovieOptions) {
     this._fps = options?.fps ?? 30;
@@ -54,13 +49,9 @@ export class Movie {
       this._width = options?.width ?? 1920;
       this._height = options?.height ?? 1080;
     }
-    this._defaultEffects = options?.effects;
+    this._defaultTelop = options?.telop;
     this._defaultTransition = options?.transition;
     this._defaultTransitionDuration = options?.transitionDuration ?? 3;
-    this._defaultOverlay = options?.overlay;
-    this._defaultTelopPosition = options?.telopPosition;
-    this._defaultCharDuration = options?.charDuration;
-    this._defaultFontSize = options?.fontSize;
   }
 
   /**
@@ -84,35 +75,22 @@ export class Movie {
   /**
    * オプションにMovieのデフォルト設定をマージ
    */
-  private _mergeDefaultsToOptions<T extends { effects?: TelopEffects; overlay?: OverlayOptions; telopPosition?: string; charDuration?: number; fontSize?: number }>(options: T): T {
-    let result = { ...options };
-
-    // デフォルトエフェクトをマージ
-    if (this._defaultEffects && !options.effects) {
-      result.effects = this._defaultEffects;
+  private _mergeDefaultsToOptions<T extends { telop?: TelopDefaults }>(options: T): T {
+    // Movieのデフォルトtelopがなければそのまま返す
+    if (!this._defaultTelop) {
+      return options;
     }
 
-    // デフォルトオーバーレイをマージ（シーン個別指定がなければ）
-    if (this._defaultOverlay && !options.overlay) {
-      result.overlay = this._defaultOverlay;
-    }
+    // オプションのtelopとMovieのデフォルトtelopをマージ
+    const mergedTelop: TelopDefaults = {
+      ...this._defaultTelop,
+      ...options.telop,
+    };
 
-    // デフォルトテロップ位置をマージ（シーン個別指定がなければ）
-    if (this._defaultTelopPosition && !options.telopPosition) {
-      result.telopPosition = this._defaultTelopPosition;
-    }
-
-    // デフォルトcharDurationをマージ（シーン個別指定がなければ）
-    if (this._defaultCharDuration !== undefined && options.charDuration === undefined) {
-      result.charDuration = this._defaultCharDuration;
-    }
-
-    // デフォルトフォントサイズをマージ（シーン個別指定がなければ）
-    if (this._defaultFontSize !== undefined && options.fontSize === undefined) {
-      result.fontSize = this._defaultFontSize;
-    }
-
-    return result;
+    return {
+      ...options,
+      telop: mergedTelop,
+    };
   }
 
   /**
