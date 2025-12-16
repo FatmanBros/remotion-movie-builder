@@ -1,5 +1,9 @@
 # Remotion Movie Builder
 
+> ⚠️ **重要**: このライブラリは[Remotion](https://remotion.dev)を使用しています。Remotionは商用利用に**有料ライセンス**が必要です。本ライブラリ自体はMITライセンスですが、Remotionのライセンス条項に従う必要があります。詳細は[Remotion Licensing](https://remotion.dev/license)を参照してください。
+>
+> ⚠️ **Important**: This library uses [Remotion](https://remotion.dev) which requires a **commercial license** for business use. This library itself is MIT licensed, but you must comply with Remotion's licensing terms. See [Remotion Licensing](https://remotion.dev/license).
+
 Remotionを使った動画生成のためのビルダーパターンライブラリ。
 
 ## インストール
