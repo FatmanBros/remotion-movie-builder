@@ -61,55 +61,55 @@ export const TelopColors = {
   blackOutline: {
     text: "#ffffff",
     stroke: "#000000",
-    strokeWidth: 20,
+    strokeWidth: 10,
   } as TelopColor,
 
   yellowOutline: {
     text: "#ffffff",
     stroke: "#FFD700",
-    strokeWidth: 20,
+    strokeWidth: 10,
   } as TelopColor,
 
   pinkOutline: {
     text: "#ffffff",
     stroke: "#FF69B4",
-    strokeWidth: 20,
+    strokeWidth: 10,
   } as TelopColor,
 
   cyanOutline: {
     text: "#ffffff",
     stroke: "#00FFFF",
-    strokeWidth: 20,
+    strokeWidth: 10,
   } as TelopColor,
 
   blueOutline: {
     text: "#ffffff",
     stroke: "#4169E1",
-    strokeWidth: 20,
+    strokeWidth: 10,
   } as TelopColor,
 
   redOutline: {
     text: "#ffffff",
     stroke: "#FF4444",
-    strokeWidth: 20,
+    strokeWidth: 10,
   } as TelopColor,
 
   greenOutline: {
     text: "#ffffff",
     stroke: "#00FF7F",
-    strokeWidth: 20,
+    strokeWidth: 10,
   } as TelopColor,
 
   orangeOutline: {
     text: "#ffffff",
     stroke: "#FFA500",
-    strokeWidth: 20,
+    strokeWidth: 10,
   } as TelopColor,
 
   purpleOutline: {
     text: "#ffffff",
     stroke: "#DA70D6",
-    strokeWidth: 20,
+    strokeWidth: 10,
   } as TelopColor,
 
   // グラデーション風（影の色で表現）

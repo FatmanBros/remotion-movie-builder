@@ -113,6 +113,31 @@ movie.crossFade(scene1: Scene, scene2: Scene, duration: number, transition?: Tra
 movie.transition(scene1: Scene, scene2: Scene, transition: TransitionType, duration: number);
 ```
 
+#### `subtitle(srt, options)`
+
+SRT字幕を追加する。シーンをまたいで動画全体に表示される。
+
+```typescript
+// SRT文字列で指定
+movie.subtitle(srtContent: string, options?: SubtitleOptions);
+
+// ファイルパスで指定（public/フォルダ内）
+movie.subtitle("subtitles.srt", options?: SubtitleOptions);
+```
+
+| パラメータ | 型 | 説明 |
+|-----------|------|------|
+| `srt` | `string` | SRT形式の文字列、または `.srt` ファイルパス |
+| `options.position` | `TelopPosition` | 表示位置（デフォルト: `"bottom 10%"`） |
+| `options.effects` | `TelopEffects` | エフェクト設定 |
+| `options.color` | `TelopColor` | 色設定 |
+| `options.fontSize` | `number` | フォントサイズ（デフォルト: `42`） |
+| `options.overlay` | `OverlayOptions` | オーバーレイ設定 |
+| `options.speakers` | `Record<string, SpeakerStyle>` | 話者別スタイル（名前変換含む） |
+| `options.showSpeakerName` | `boolean` | 話者名を表示するか |
+| `options.prefix` | `string` | 字幕の前に付けるテキスト |
+| `options.suffix` | `string` | 字幕の後に付けるテキスト |
+
 #### `build()`
 
 MovieDataを生成する。
@@ -340,3 +365,56 @@ const movieData = movie.build();
 | Prop | 型 | 説明 |
 |------|------|------|
 | `movieData` | `MovieData` | `movie.build()` で生成したデータ |
+
+---
+
+## 字幕（Subtitle）
+
+### SpeakerStyle
+
+話者別スタイルの設定。
+
+```typescript
+type SpeakerStyle = {
+  name?: string;           // 表示名（SPEAKER_00 → 田中 のような変換）
+  color?: TelopColor;      // 色設定
+  position?: TelopPosition; // 表示位置
+  fontSize?: number;       // フォントサイズ
+};
+```
+
+### 話者フォーマット
+
+SRTテキスト内で以下の形式で話者を指定できます：
+
+- `[話者名] テキスト`
+- `（話者名）テキスト`
+- `(話者名) テキスト`
+
+### WhisperX対応
+
+WhisperXで生成された `SPEAKER_00` などのIDを名前に変換：
+
+```typescript
+movie.subtitle(srtContent, {
+  speakers: {
+    "SPEAKER_00": {
+      name: "田中",  // 表示名に変換
+      color: { text: "#ffdd00" },
+    },
+    "SPEAKER_01": {
+      name: "山田",
+      color: { text: "#00ddff" },
+    },
+  },
+  prefix: "{{$speaker}}「",
+  suffix: "」",
+});
+// 表示例: 田中「こんにちは」
+```
+
+### prefix/suffix プレースホルダー
+
+| プレースホルダー | 説明 |
+|------------------|------|
+| `{{$speaker}}` | 話者名（変換後） |

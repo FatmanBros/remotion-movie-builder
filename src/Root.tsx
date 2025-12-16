@@ -5,6 +5,7 @@ import {
   demo10,
   demo11,
   demo12,
+  demo13,
   demo2,
   demo3,
   demo4,
@@ -37,6 +38,7 @@ export const RemotionRoot: React.FC = () => {
       <RmbComposition id="Demo10-DisplayModes" {...demo10} />
       <RmbComposition id="Demo11-Audio" {...demo11} />
       <RmbComposition id="Demo12-FontSize" {...demo12} />
+      <RmbComposition id="Demo13-Subtitle" {...demo13} />
     </>
   );
 };

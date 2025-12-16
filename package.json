@@ -24,6 +24,7 @@
   "type": "module",
   "dependencies": {
     "@remotion/animated-emoji": "^4.0.390",
+    "@remotion/captions": "^4.0.390",
     "@remotion/cli": "^4.0.390",
     "@remotion/google-fonts": "^4.0.390",
     "@remotion/player": "^4.0.390",

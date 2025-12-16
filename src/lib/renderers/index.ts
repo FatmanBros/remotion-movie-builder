@@ -4,3 +4,4 @@ export { WipeRenderer } from "./WipeRenderer";
 export { AudioRenderer } from "./AudioRenderer";
 export { OpeningEndingRenderer } from "./PrologueRenderer";
 export { FixedElementRenderer } from "./FixedElementRenderer";
+export { SubtitleRenderer } from "./SubtitleRenderer";

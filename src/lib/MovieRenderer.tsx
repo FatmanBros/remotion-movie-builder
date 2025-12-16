@@ -6,6 +6,7 @@ import {
   AudioRenderer,
   OpeningEndingRenderer,
   FixedElementRenderer,
+  SubtitleRenderer,
 } from "./renderers";
 
 type Props = {
@@ -103,6 +104,13 @@ export const MovieRenderer: React.FC<Props> = ({ movieData }) => {
       {movieData.fixedElements.length > 0 && (
         <Sequence from={0} durationInFrames={totalDurationFrames}>
           <FixedElementRenderer elements={movieData.fixedElements} />
+        </Sequence>
+      )}
+
+      {/* SRT字幕 */}
+      {movieData.subtitles && (
+        <Sequence from={0} durationInFrames={totalDurationFrames}>
+          <SubtitleRenderer subtitles={movieData.subtitles} />
         </Sequence>
       )}
     </AbsoluteFill>

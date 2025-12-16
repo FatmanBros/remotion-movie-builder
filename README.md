@@ -36,6 +36,7 @@ npm run start
 | Demo10 | 表示モード | displayMode、テロップ位置（position） |
 | Demo11 | オーディオ | BGM、ダッキング、フェードイン/アウト |
 | Demo12 | フォントサイズ | fontSize、階層的な設定、優先順位 |
+| Demo13 | SRT字幕 | WhisperX形式、話者ID変換、色分け |
 
 ## APIリファレンス
 
@@ -64,6 +65,7 @@ const movie = new Movie();
 | `transition(...)` | ⚠️ 非推奨: `scene.transitionTo()` を使用 | `this` |
 | `audio(file, options?)` | グローバルオーディオを追加 | `this` |
 | `bgm(file, options?)` | BGMを追加（ダッキング対応） | `this` |
+| `subtitle(srt, options?)` | SRT字幕を追加 | `this` |
 | `build()` | MovieDataを構築 | `MovieData` |
 
 ### Scene
@@ -223,6 +225,148 @@ type TransitionOptions = {
 };
 ```
 
+### SubtitleOptions
+
+```typescript
+type SubtitleOptions = {
+  effects?: TelopEffects;     // エフェクト設定
+  position?: TelopPosition;   // 表示位置（デフォルト: "bottom 10%"）
+  color?: TelopColor;         // 色設定
+  fontSize?: number;          // フォントサイズ（デフォルト: 42）
+  overlay?: OverlayOptions;   // オーバーレイ設定
+};
+```
+
+---
+
+## 字幕（SRT）
+
+SRTファイルまたはSRT形式の文字列から字幕を追加できます。シーンをまたいで動画全体に表示されます。
+
+### 文字列で指定
+
+```typescript
+const srtContent = `
+1
+00:00:01,000 --> 00:00:04,000
+こんにちは
+
+2
+00:00:05,000 --> 00:00:08,000
+これはサンプルです
+`;
+
+movie.subtitle(srtContent, {
+  position: "bottom 10%",
+  effects: TelopPresets.simple,
+});
+```
+
+### ファイルパスで指定
+
+`public/` フォルダにSRTファイルを配置し、ファイル名で指定します。
+
+```typescript
+// public/subtitles.srt に配置
+movie.subtitle("subtitles.srt", {
+  position: "bottom 10%",
+  color: { text: "#ffffff" },
+});
+```
+
+### オプション
+
+| オプション | 型 | デフォルト | 説明 |
+|-----------|-----|----------|------|
+| `position` | `TelopPosition` | `"bottom 10%"` | 表示位置 |
+| `effects` | `TelopEffects` | - | エフェクト設定 |
+| `color` | `TelopColor` | - | 色設定 |
+| `fontSize` | `number` | `42` | フォントサイズ |
+| `overlay` | `OverlayOptions` | - | オーバーレイ設定 |
+| `speakers` | `Record<string, SpeakerStyle>` | - | 話者別スタイル（名前変換含む） |
+| `showSpeakerName` | `boolean` | `false` | 話者名を表示するか |
+| `prefix` | `string` | - | 字幕の前に付けるテキスト |
+| `suffix` | `string` | - | 字幕の後に付けるテキスト |
+
+### 話者別スタイル
+
+SRTファイルに話者情報を含めると、話者ごとに色などを変えられます。
+
+**対応フォーマット:**
+- `[話者名] テキスト`
+- `（話者名）テキスト`
+- `(話者名) テキスト`
+
+```typescript
+const srtContent = `
+1
+00:00:01,000 --> 00:00:04,000
+[田中] こんにちは
+
+2
+00:00:05,000 --> 00:00:08,000
+[山田] はい、こんにちは
+`;
+
+movie.subtitle(srtContent, {
+  speakers: {
+    "田中": { color: { text: "#ffdd00" } },
+    "山田": { color: { text: "#00ddff" } },
+  },
+});
+```
+
+### 話者ID→名前の変換（WhisperX対応）
+
+WhisperXなどで生成されたSRTファイルの `SPEAKER_00` などのIDを名前に変換できます。
+`speakers` オブジェクトの `name` プロパティで話者IDから表示名への変換を指定します。
+
+```typescript
+// WhisperXで生成されたSRT
+const srtContent = `
+1
+00:00:01,000 --> 00:00:04,000
+[SPEAKER_00] こんにちは
+
+2
+00:00:05,000 --> 00:00:08,000
+[SPEAKER_01] はい、こんにちは
+`;
+
+movie.subtitle(srtContent, {
+  // 話者ID→名前変換 & スタイル設定を一箇所で
+  speakers: {
+    "SPEAKER_00": {
+      name: "田中",  // 表示名
+      color: { text: "#ffdd00" },
+    },
+    "SPEAKER_01": {
+      name: "山田",
+      color: { text: "#00ddff" },
+    },
+  },
+  prefix: "{{$speaker}}「",
+  suffix: "」",
+});
+// 表示例: 田中「こんにちは」
+```
+
+### prefix/suffix で表示形式をカスタマイズ
+
+`{{$speaker}}` プレースホルダーで話者名を挿入できます。
+
+```typescript
+movie.subtitle(srtContent, {
+  speakers: {
+    "SPEAKER_00": { name: "田中", color: { text: "#ffdd00" } },
+    "SPEAKER_01": { name: "山田", color: { text: "#00ddff" } },
+  },
+  prefix: "{{$speaker}}「",
+  suffix: "」",
+});
+// 表示例: 田中「こんにちは」
+```
+
 ---
 
 ## フォントサイズ
@@ -307,6 +451,7 @@ import {
   type TelopColor,
   type AudioOptions,
   type BgmOptions,
+  type SubtitleOptions,
   type MovieData,
   // ...
 } from "./lib";

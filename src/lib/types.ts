@@ -432,6 +432,43 @@ export type OpeningEndingData = {
   displayMode?: DisplayMode; // 表示モード
 };
 
+// 話者別スタイル
+export type SpeakerStyle = {
+  name?: string; // 表示名（SPEAKER_00 → 田中 のような変換）
+  color?: TelopColor; // 色設定
+  position?: TelopPosition; // 表示位置
+  fontSize?: number; // フォントサイズ
+};
+
+// 字幕オプション
+export type SubtitleOptions = {
+  effects?: TelopEffects; // エフェクト設定
+  position?: TelopPosition; // 表示位置（デフォルト: "bottom 10%"）
+  color?: TelopColor; // 色設定
+  fontSize?: number; // フォントサイズ
+  overlay?: OverlayOptions; // オーバーレイ設定
+  speakers?: Record<string, SpeakerStyle>; // 話者別スタイル（name で表示名を変換可能）
+  showSpeakerName?: boolean; // 話者名を表示するか（デフォルト: false）
+  prefix?: string; // 字幕の前に付けるテキスト（{{$speaker}}で話者名を挿入可能）
+  suffix?: string; // 字幕の後に付けるテキスト（{{$speaker}}で話者名を挿入可能）
+};
+
+// 字幕キャプションデータ
+export type CaptionData = {
+  text: string;
+  startMs: number; // 開始時間（ミリ秒）
+  endMs: number; // 終了時間（ミリ秒）
+};
+
+// 字幕データ（内部用）
+export type SubtitleData = {
+  // パース済みの字幕データ（文字列指定の場合）
+  captions?: CaptionData[];
+  // ファイルパス（ファイル指定の場合）
+  file?: string;
+  options: SubtitleOptions;
+};
+
 // ムービー全体のデータ
 export type MovieData = {
   fps: number; // フレームレート
@@ -445,4 +482,5 @@ export type MovieData = {
   crossFades: CrossFadeData[];
   audios: AudioData[]; // グローバルオーディオ（BGM等）
   fixedElements: FixedElementData[]; // ムービー全体の固定要素
+  subtitles?: SubtitleData; // SRT字幕
 };

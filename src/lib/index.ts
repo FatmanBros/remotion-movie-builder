@@ -48,4 +48,8 @@ export type {
   FixedElementData,
   DisplayMode,
   VideoSizePreset,
+  SubtitleOptions,
+  SubtitleData,
+  CaptionData,
+  SpeakerStyle,
 } from "./types";

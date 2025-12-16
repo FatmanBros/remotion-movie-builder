@@ -1,3 +1,4 @@
+import { parseSrt } from "@remotion/captions";
 import { Scene } from "./Scene";
 import { OpeningEnding } from "./OpeningEnding";
 import {
@@ -18,6 +19,8 @@ import {
   FixedImageOptions,
   FixedTextOptions,
   VideoSize,
+  SubtitleOptions,
+  SubtitleData,
 } from "./types";
 
 export class Movie {
@@ -30,6 +33,7 @@ export class Movie {
   private _crossFades: CrossFadeData[] = [];
   private _audios: AudioData[] = [];
   private _fixedElements: FixedElementData[] = [];
+  private _subtitles?: SubtitleData;
   private _currentTime: number = 0;
   private _defaultEffects?: TelopEffects;
   private _defaultTransition?: TransitionType;
@@ -300,6 +304,43 @@ export class Movie {
   }
 
   /**
+   * SRT字幕を追加（ムービー全体で表示）
+   * @param srtPathOrContent SRTファイルパス（.srt拡張子）またはSRT形式の文字列
+   * @param options 字幕のオプション
+   * @example
+   * // ファイルパスで指定（public/フォルダに配置）
+   * movie.subtitle("subtitles.srt", { position: "bottom 10%" });
+   *
+   * // 文字列で指定
+   * const srtContent = fs.readFileSync("subtitles.srt", "utf-8");
+   * movie.subtitle(srtContent, { effects: TelopPresets.simple });
+   */
+  subtitle(srtPathOrContent: string, options: SubtitleOptions = {}): this {
+    // .srt 拡張子ならファイルパスと判断
+    const isSrtFile = srtPathOrContent.trim().endsWith(".srt");
+
+    if (isSrtFile) {
+      // ファイルパスの場合はレンダリング時に非同期ロード
+      this._subtitles = {
+        file: srtPathOrContent,
+        options,
+      };
+    } else {
+      // 文字列の場合は即座にパース
+      const { captions } = parseSrt({ input: srtPathOrContent });
+      this._subtitles = {
+        captions: captions.map((c) => ({
+          text: c.text,
+          startMs: c.startMs,
+          endMs: c.endMs,
+        })),
+        options,
+      };
+    }
+    return this;
+  }
+
+  /**
    * ムービーデータを構築
    */
   build(): MovieData {
@@ -464,6 +505,7 @@ export class Movie {
       crossFades: allCrossFades,
       audios: this._audios,
       fixedElements: this._fixedElements,
+      subtitles: this._subtitles,
     };
   }
 }

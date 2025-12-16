@@ -10,3 +10,4 @@ export { demo9 } from "./Demo9FixedElements";
 export { demo10 } from "./Demo10DisplayModes";
 export { demo11 } from "./Demo11Audio";
 export { demo12 } from "./Demo12FontSize";
+export { demo13 } from "./Demo13Subtitle";
