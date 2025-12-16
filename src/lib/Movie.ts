@@ -37,6 +37,7 @@ export class Movie {
   private _defaultOverlay?: OverlayOptions;
   private _defaultTelopPosition?: string;
   private _defaultCharDuration?: number;
+  private _defaultFontSize?: number;
 
   constructor(options?: MovieOptions) {
     this._fps = options?.fps ?? 30;
@@ -55,6 +56,7 @@ export class Movie {
     this._defaultOverlay = options?.overlay;
     this._defaultTelopPosition = options?.telopPosition;
     this._defaultCharDuration = options?.charDuration;
+    this._defaultFontSize = options?.fontSize;
   }
 
   /**
@@ -78,7 +80,7 @@ export class Movie {
   /**
    * オプションにMovieのデフォルト設定をマージ
    */
-  private _mergeDefaultsToOptions<T extends { effects?: TelopEffects; overlay?: OverlayOptions; telopPosition?: string; charDuration?: number }>(options: T): T {
+  private _mergeDefaultsToOptions<T extends { effects?: TelopEffects; overlay?: OverlayOptions; telopPosition?: string; charDuration?: number; fontSize?: number }>(options: T): T {
     let result = { ...options };
 
     // デフォルトエフェクトをマージ
@@ -99,6 +101,11 @@ export class Movie {
     // デフォルトcharDurationをマージ（シーン個別指定がなければ）
     if (this._defaultCharDuration !== undefined && options.charDuration === undefined) {
       result.charDuration = this._defaultCharDuration;
+    }
+
+    // デフォルトフォントサイズをマージ（シーン個別指定がなければ）
+    if (this._defaultFontSize !== undefined && options.fontSize === undefined) {
+      result.fontSize = this._defaultFontSize;
     }
 
     return result;

@@ -8,3 +8,5 @@ export { demo7 } from "./Demo7TelopColors";
 export { demo8 } from "./Demo8Overlay";
 export { demo9 } from "./Demo9FixedElements";
 export { demo10 } from "./Demo10DisplayModes";
+export { demo11 } from "./Demo11Audio";
+export { demo12 } from "./Demo12FontSize";

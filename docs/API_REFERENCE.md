@@ -7,10 +7,18 @@
 ### コンストラクタ
 
 ```typescript
-const movie = new Movie(files: FileDefinition[]);
+const movie = new Movie(options?: MovieOptions);
 ```
 
-#### FileDefinition
+#### MovieOptions
+
+```typescript
+type MovieOptions = {
+  fontSize?: number;    // テロップのデフォルトフォントサイズ（デフォルト: 48）
+};
+```
+
+#### FileDefinition（従来形式）
 
 ```typescript
 type FileDefinition = {
@@ -38,6 +46,7 @@ const opening = movie.opening(duration: number, options: OpeningEndingOptions);
 | `options.effect` | `EffectType` | フェードエフェクト（`fadeIn` / `fadeOut`） |
 | `options.displayMode` | `DisplayMode` | 表示モード |
 | `options.telopPosition` | `string` | テロップのデフォルト位置 |
+| `options.fontSize` | `number` | テロップのフォントサイズ（デフォルト: 48） |
 
 #### `scene(key, options)`
 
@@ -54,6 +63,7 @@ const scene = movie.scene(key: string, options: SceneOptions);
 | `options.trimBefore` | `number` | 動画の開始位置（秒） |
 | `options.effect` | `EffectType \| EffectType[]` | エフェクト |
 | `options.overlay` | `OverlayOptions` | オーバーレイ設定 |
+| `options.fontSize` | `number` | テロップのフォントサイズ（デフォルト: 48） |
 
 #### `ending(options)` / `ending(duration, options)`
 
@@ -137,6 +147,7 @@ scene.telop(text: string, options: TelopOptions);
 | `options.position` | `"bottom" \| "center" \| "top"` | 表示位置 |
 | `options.overlay` | `OverlayOptions` | オーバーレイ設定 |
 | `options.emoji` | `string` | 絵文字名 |
+| `options.fontSize` | `number` | フォントサイズ（デフォルト: 48） |
 
 #### `audio(file, options)`
 

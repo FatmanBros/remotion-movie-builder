@@ -111,6 +111,7 @@ export type OpeningEndingOptions = {
   telopPosition?: TelopPosition; // デフォルトテロップ位置（"bottom", "top 20%"など）
   displayMode?: DisplayMode; // 表示モード（デフォルト: cover）
   charDuration?: number; // 1文字あたりの表示秒数（デフォルト: 0.2）
+  fontSize?: number; // テロップのベースフォントサイズ（デフォルト: 48）
 };
 
 // 動画サイズのプリセット
@@ -147,6 +148,7 @@ export type MovieOptions = {
   overlay?: OverlayOptions; // デフォルトオーバーレイ（全テロップに適用）
   telopPosition?: TelopPosition; // デフォルトテロップ位置（"bottom", "top 20%"など）
   charDuration?: number; // 1文字あたりの表示秒数（デフォルト: 0.2）
+  fontSize?: number; // テロップのベースフォントサイズ（デフォルト: 48）
 };
 
 // シーンのオプション
@@ -163,6 +165,7 @@ export type SceneOptions = {
   backgroundColor?: string; // 背景色（例: "#ffffff", "#000000"）
   displayMode?: DisplayMode; // 表示モード（デフォルト: cover）
   charDuration?: number; // 1文字あたりの表示秒数（デフォルト: 0.2）
+  fontSize?: number; // テロップのベースフォントサイズ（デフォルト: 48）
 };
 
 // ワイプの位置
@@ -319,6 +322,7 @@ export type TelopOptions = {
   color?: TelopColor; // 色設定
   sfx?: string | TelopSfxOptions; // 効果音（ファイル名 or オプション）
   charDuration?: number; // 1文字あたりの表示秒数（個別指定）
+  fontSize?: number; // フォントサイズ（個別指定）
 };
 
 // テロップのデータ
@@ -332,6 +336,7 @@ export type TelopData = {
   emoji?: EmojiName;
   color?: TelopColor; // 色設定
   sfx?: { file: string; volume: number }; // 効果音
+  fontSize?: number; // フォントサイズ
 };
 
 // オーディオのオプション

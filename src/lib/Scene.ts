@@ -42,6 +42,7 @@ export class Scene {
   readonly defaultEffects?: TelopEffects;
   readonly defaultTelopPosition?: string;
   readonly defaultCharDuration?: number;
+  readonly defaultFontSize?: number;
   readonly bgmVolume?: number;
   readonly volume?: number;
   readonly loop?: boolean;
@@ -65,6 +66,7 @@ export class Scene {
     this.defaultEffects = options.effects;
     this.defaultTelopPosition = options.telopPosition;
     this.defaultCharDuration = options.charDuration;
+    this.defaultFontSize = options.fontSize;
     this.bgmVolume = options.bgmVolume;
     this.volume = options.volume;
     // trimBeforeがある場合はloopを無効化（Loopコンポーネントで負のdurationになる問題回避）
@@ -161,6 +163,7 @@ export class Scene {
       emoji: options.emoji,
       color: options.color,
       sfx,
+      fontSize: options.fontSize ?? this.defaultFontSize,
     };
 
     this._telops.push(telopData);

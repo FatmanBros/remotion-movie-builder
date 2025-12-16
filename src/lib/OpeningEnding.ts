@@ -9,6 +9,7 @@ export class OpeningEnding {
   readonly defaultTelopPosition?: string;
   readonly defaultOverlay?: OverlayOptions;
   readonly defaultCharDuration?: number;
+  readonly defaultFontSize?: number;
   readonly displayMode?: DisplayMode;
   private _telops: TelopData[] = [];
   private _currentTime: number = 0;
@@ -25,6 +26,7 @@ export class OpeningEnding {
     this.defaultTelopPosition = options.telopPosition;
     this.defaultOverlay = options.overlay;
     this.defaultCharDuration = options.charDuration;
+    this.defaultFontSize = options.fontSize;
     this.displayMode = options.displayMode;
   }
 
@@ -100,6 +102,7 @@ export class OpeningEnding {
       emoji: options.emoji,
       color: options.color,
       sfx,
+      fontSize: options.fontSize ?? this.defaultFontSize,
     };
 
     this._telops.push(telopData);

@@ -30,6 +30,8 @@ npm run start
 | Demo8 | オーバーレイ | gradient、box、shadow |
 | Demo9 | 固定要素 | ロゴ、ウォーターマーク、位置指定 |
 | Demo10 | 表示モード | displayMode、テロップ位置（position） |
+| Demo11 | オーディオ | BGM、ダッキング、フェードイン/アウト |
+| Demo12 | フォントサイズ | fontSize、階層的な設定、優先順位 |
 
 ## APIリファレンス
 
@@ -176,6 +178,7 @@ type TelopOptions = {
   emoji?: string;             // 絵文字
   color?: TelopColor;         // 色設定
   sfx?: string | TelopSfxOptions;  // 効果音
+  fontSize?: number;          // フォントサイズ（デフォルト: 48）
 };
 ```
 
@@ -215,6 +218,51 @@ type TransitionOptions = {
   transition?: TransitionType; // トランジション種類（デフォルト: "fade"）
 };
 ```
+
+---
+
+## フォントサイズ
+
+テロップのフォントサイズを柔軟に指定できます。
+
+### Movie全体のデフォルト
+
+```typescript
+const movie = new Movie({
+  fontSize: 64,  // 全テロップに適用（デフォルト: 48）
+});
+```
+
+### シーン単位のデフォルト
+
+```typescript
+const scene = movie.scene("video.mp4", {
+  fontSize: 56,  // このシーンのテロップに適用
+});
+```
+
+### Opening/Ending単位
+
+```typescript
+const opening = movie.opening({
+  image: "title.png",
+  fontSize: 72,  // オープニングのテロップに適用
+});
+```
+
+### 個別テロップ
+
+```typescript
+scene.telop("大きいテロップ", { fontSize: 80 });
+scene.telop("小さいテロップ", { fontSize: 32 });
+```
+
+### 優先順位
+
+1. テロップ個別の `fontSize`
+2. シーン/Opening/Ending の `fontSize`
+3. Movie の `fontSize`
+4. デフォルト値 `48`
 
 ---
 

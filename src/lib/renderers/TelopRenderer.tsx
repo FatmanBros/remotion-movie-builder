@@ -46,6 +46,9 @@ export const TelopRenderer: React.FC<{
   const parsedPosition = parseTelopPosition(telop.position);
   const positionStyle = getTelopPositionStyle(parsedPosition, stackOffset);
 
+  // フォントサイズ（デフォルト: 48）
+  const fontSize = telop.fontSize ?? 48;
+
   const overlayType = telop.overlay?.type ?? "gradient";
   const overlayColor = parseColorToRgb(telop.overlay?.color ?? "#000000");
   const overlayOpacity = telop.overlay?.opacity ?? 0.7;
@@ -148,7 +151,7 @@ export const TelopRenderer: React.FC<{
               {telop.color?.outerStroke ? (
                 <DoubleStrokeText
                   text={telop.text}
-                  fontSize={48}
+                  fontSize={fontSize}
                   fillColor={telop.color.text ?? "#ffdd00"}
                   innerStroke={telop.color.stroke ?? "#ffffff"}
                   innerStrokeWidth={telop.color.strokeWidth ?? 8}
@@ -164,7 +167,7 @@ export const TelopRenderer: React.FC<{
                 <p
                   style={{
                     color: telop.color?.text ?? "#ffffff",
-                    fontSize: 48,
+                    fontSize,
                     fontWeight: "bold",
                     margin: 0,
                     textShadow: shadowTextShadow
@@ -205,7 +208,7 @@ export const TelopRenderer: React.FC<{
             {telop.emoji && (
               <AnimatedEmoji
                 emoji={telop.emoji as EmojiName}
-                style={{ height: 48 }}
+                style={{ height: fontSize }}
               />
             )}
           </div>

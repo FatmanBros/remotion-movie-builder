@@ -3,6 +3,8 @@ import React from "react";
 import {
   demo1,
   demo10,
+  demo11,
+  demo12,
   demo2,
   demo3,
   demo4,
@@ -23,16 +25,18 @@ export const RemotionRoot: React.FC = () => {
       {/* <RmbComposition id="short" {...movie} /> */}
 
       {/* サンプルデモ動画 */}
-      <RmbComposition id="demo1" {...demo1} />
-      <RmbComposition id="demo2" {...demo2} />
-      <RmbComposition id="demo3" {...demo3} />
-      <RmbComposition id="demo4" {...demo4} />
-      <RmbComposition id="demo5" {...demo5} />
-      <RmbComposition id="demo6" {...demo6} />
-      <RmbComposition id="demo7" {...demo7} />
-      <RmbComposition id="demo8" {...demo8} />
-      <RmbComposition id="demo9" {...demo9} />
-      <RmbComposition id="demo10" {...demo10} />
+      <RmbComposition id="Demo1-BasicScenes" {...demo1} />
+      <RmbComposition id="Demo2-ImageScenes" {...demo2} />
+      <RmbComposition id="Demo3-TelopEffects" {...demo3} />
+      <RmbComposition id="Demo4-Transitions" {...demo4} />
+      <RmbComposition id="Demo5-Wipe" {...demo5} />
+      <RmbComposition id="Demo6-BatchTelop" {...demo6} />
+      <RmbComposition id="Demo7-TelopColors" {...demo7} />
+      <RmbComposition id="Demo8-Overlay" {...demo8} />
+      <RmbComposition id="Demo9-FixedElements" {...demo9} />
+      <RmbComposition id="Demo10-DisplayModes" {...demo10} />
+      <RmbComposition id="Demo11-Audio" {...demo11} />
+      <RmbComposition id="Demo12-FontSize" {...demo12} />
     </>
   );
 };
