@@ -18,9 +18,13 @@ type MovieOptions = {
   width?: number;       // 幅（デフォルト: 1920）
   height?: number;      // 高さ（デフォルト: 1080）
   size?: VideoSizePreset; // "standard" | "shorts" などのプリセット
-  transition?: TransitionType; // デフォルトトランジション
-  transitionDuration?: number; // デフォルトトランジション秒数
+  transition?: TransitionDefaults; // トランジションのデフォルト設定
   telop?: TelopDefaults; // テロップのデフォルト設定
+};
+
+type TransitionDefaults = {
+  type?: TransitionType;  // トランジションの種類
+  duration?: number;      // トランジション秒数（デフォルト: 3）
 };
 
 type TelopDefaults = {

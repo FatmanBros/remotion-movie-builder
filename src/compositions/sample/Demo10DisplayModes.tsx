@@ -23,8 +23,7 @@ import { Movie, Effects, Transitions, rmbProps } from "../../lib";
  */
 const buildDemo10Movie = () => {
   const movie = new Movie({
-    transition: Transitions.fade,
-    transitionDuration: 1,
+    transition: { type: Transitions.fade, duration: 1 },
     telop: { overlay: { type: "shadow", color: "#999999" } },
   });
 

@@ -35,7 +35,7 @@ export class Movie {
   private _subtitles?: SubtitleData;
   private _currentTime: number = 0;
   private _defaultTelop?: TelopDefaults;
-  private _defaultTransition?: TransitionType;
+  private _defaultTransitionType?: TransitionType;
   private _defaultTransitionDuration: number;
 
   constructor(options?: MovieOptions) {
@@ -50,8 +50,8 @@ export class Movie {
       this._height = options?.height ?? 1080;
     }
     this._defaultTelop = options?.telop;
-    this._defaultTransition = options?.transition;
-    this._defaultTransitionDuration = options?.transitionDuration ?? 3;
+    this._defaultTransitionType = options?.transition?.type;
+    this._defaultTransitionDuration = options?.transition?.duration ?? 3;
   }
 
   /**
@@ -357,7 +357,7 @@ export class Movie {
 
         // 明示的なトランジションがない場合、デフォルトを使用
         transitionDuration = crossFade?.duration ?? sceneTransition?.duration ??
-          (this._defaultTransition ? this._defaultTransitionDuration : undefined);
+          (this._defaultTransitionType ? this._defaultTransitionDuration : undefined);
 
         if (transitionDuration) {
           // トランジション分だけ早く開始
@@ -452,7 +452,7 @@ export class Movie {
     }
 
     // デフォルトトランジションを連続するシーン間に追加
-    if (this._defaultTransition) {
+    if (this._defaultTransitionType) {
       for (let i = 0; i < this._scenes.length - 1; i++) {
         const scene1 = this._scenes[i];
         const scene2 = this._scenes[i + 1];
@@ -465,7 +465,7 @@ export class Movie {
             scene1Key: scene1.key,
             scene2Key: scene2.key,
             duration: this._defaultTransitionDuration,
-            transition: this._defaultTransition,
+            transition: this._defaultTransitionType,
           });
         }
       }

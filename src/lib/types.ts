@@ -142,14 +142,19 @@ export const VideoSize = {
 
 export type VideoSizePreset = keyof typeof VideoSize;
 
+// トランジションのデフォルト設定
+export type TransitionDefaults = {
+  type?: TransitionType;  // トランジションの種類
+  duration?: number;      // トランジション秒数（デフォルト: 3）
+};
+
 // ムービー全体のオプション
 export type MovieOptions = {
   fps?: number; // フレームレート（デフォルト: 30）
   width?: number; // 幅（デフォルト: 1920）
   height?: number; // 高さ（デフォルト: 1080）
   size?: VideoSizePreset; // サイズプリセット（width/heightより優先）
-  transition?: TransitionType; // デフォルトトランジション（全シーン間に適用）
-  transitionDuration?: number; // デフォルトトランジション秒数（デフォルト: 3）
+  transition?: TransitionDefaults; // デフォルトトランジション設定（全シーン間に適用）
   telop?: TelopDefaults;   // テロップのデフォルト設定（全シーン・プロローグ・エピローグに適用）
 };
 

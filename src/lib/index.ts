@@ -32,6 +32,7 @@ export type {
   TelopOptions,
   TelopData,
   TelopDefaults,
+  TransitionDefaults,
   WipePosition,
   WipeOptions,
   WipeData,
